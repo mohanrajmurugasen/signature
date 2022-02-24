@@ -1,0 +1,29 @@
+.chitdetail .viewDetails button {
+  background: #ff9500;
+  border: none;
+  color: white;
+}
+.chitdetail {
+  background: whitesmoke;
+}
+.chitdetail .cardDetails {
+  box-shadow: 0 4px 8px 0 rgb(0 0 0 / 6%), 0 6px 20px 0 rgb(0 0 0 / 6%) !important;
+}
+.chitdetail .chits h5 {
+  font-weight: 500;
+  font-size: 16px;
+}
+.chitdetail .light {
+  background-color: white !important;
+  box-shadow: 0 4px 8px 0 rgb(0 0 0 / 6%), 0 6px 20px 0 rgb(0 0 0 / 6%) !important;
+  margin-bottom: 15px;
+}
+.chitdetail .address {
+  font-size: small;
+  color: gray;
+  text-transform: capitalize;
+}
+.chitdetail .details {
+  font-size: small;
+  text-transform: capitalize;
+}

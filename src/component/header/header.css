@@ -1,0 +1,47 @@
+.navTab {
+  border-bottom: 1px solid #8080803b;
+  background-color: white;
+}
+.navbar-dark .navbar-nav .nav-link {
+  color: black !important;
+  border: #1355b5 !important;
+}
+.header .navbar-dark .navbar-toggler {
+  color: #1355b5;
+  border-color: #1355b5;
+}
+.navbar-nav {
+  float: right;
+}
+.header .buttons {
+  text-transform: capitalize;
+  color: #1355b5;
+  font-weight: 400;
+}
+.header .buttons span {
+  color: gray;
+  margin-left: 10px;
+}
+.header .MuiAvatar-circular {
+  background-color: white !important;
+  border: 1px solid #1355b5;
+  color: #1355b5;
+}
+.header .bottom {
+  margin-top: 50px;
+  background-color: black;
+}
+.header .bottom .navs {
+  justify-content: space-evenly;
+}
+.header .bottom .navs a {
+  color: white;
+  font-size: large;
+  font-weight: 600;
+  padding: 15px 0px;
+}
+.header .bottom .navs a svg {
+  color: gray;
+  margin-right: 5px;
+  margin-top: -2px;
+}

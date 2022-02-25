@@ -112,7 +112,7 @@ function ChitDetail(props) {
                             </Col>
                             <Col lg={6} md={6} sm={6}>
                               <div>
-                                <p>Tenor in Months</p>
+                                <p>Pending Due</p>
                                 <span>
                                   <b>14,890</b>
                                 </span>
@@ -139,10 +139,7 @@ function ChitDetail(props) {
                 </div>
                 <Divider style={{ color: "darkgray" }} />
                 <div className="pb-2 ps-2 pt-2">
-                  <span
-                    className="text-primary"
-                    style={{ fontSize: "small", cursor: "pointer" }}
-                  >
+                  <span className="text-primary" style={{ fontSize: "small" }}>
                     Click here to know your Updates
                   </span>
                 </div>
@@ -153,7 +150,7 @@ function ChitDetail(props) {
                 >
                   <div className="d-flex justify-content-between">
                     <p style={{ fontSize: "small" }}>
-                      <b>Stop SDP</b>
+                      <b>Quick Pay</b>
                     </p>
                     <ArrowForwardIcon
                       style={{
@@ -171,7 +168,7 @@ function ChitDetail(props) {
                 >
                   <div className="d-flex justify-content-between">
                     <p style={{ fontSize: "small" }}>
-                      <b>Update Contact Details</b>
+                      <b>Support</b>
                     </p>
                     <ArrowForwardIcon
                       style={{
@@ -189,7 +186,7 @@ function ChitDetail(props) {
                 >
                   <div className="d-flex justify-content-between">
                     <p className="fw-normal" style={{ fontSize: "small" }}>
-                      <b>Read about fraud aeareness</b>
+                      <b>Contact Us</b>
                     </p>
                     <ArrowForwardIcon
                       style={{

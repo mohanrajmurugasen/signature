@@ -49,6 +49,7 @@ function Pending(props) {
     authAxios
       .post("chit_customer_collection_due_list", { mobile_no: `${user}` })
       .then((res) => {
+        // console.log(res.data.data);
         res.data.data
           .filter((nam) => nam.chit_scheme_name === phone)
           .map((itm) => {
@@ -105,11 +106,13 @@ function Pending(props) {
       <Container>
         <TableContainer component={Paper}>
           <Table sx={{ minWidth: 700 }} aria-label="customized table">
-            <TableHead>
+            <TableHead className="tabHeads">
               <TableRow>
+                <StyledTableCell>No</StyledTableCell>
                 <StyledTableCell>Customer Name</StyledTableCell>
                 <StyledTableCell>Scheme Name</StyledTableCell>
                 <StyledTableCell>Chit Code</StyledTableCell>
+                <StyledTableCell>Due Date</StyledTableCell>
                 <StyledTableCell>Due amount</StyledTableCell>
                 <StyledTableCell></StyledTableCell>
               </TableRow>
@@ -118,11 +121,13 @@ function Pending(props) {
               {currentItems &&
                 currentItems.map((row, index) => (
                   <StyledTableRow key={index}>
+                    <StyledTableCell>{index + 1}</StyledTableCell>
                     <StyledTableCell component="th" scope="row">
                       {row.customer_name}
                     </StyledTableCell>
                     <StyledTableCell>{row.chit_scheme_name}</StyledTableCell>
                     <StyledTableCell>{row.chit_code_name}</StyledTableCell>
+                    <StyledTableCell>{row.due_date}</StyledTableCell>
                     <StyledTableCell>{row.due_amount}</StyledTableCell>
                     <StyledTableCell style={{ width: "150px" }}>
                       <Button variant="contained" onClick={() => payNow(row)}>

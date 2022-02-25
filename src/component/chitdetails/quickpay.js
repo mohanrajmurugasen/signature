@@ -99,7 +99,7 @@ function QuickPay(props) {
       <Container>
         <TableContainer component={Paper}>
           <Table sx={{ minWidth: 700 }} aria-label="customized table">
-            <TableHead>
+            <TableHead className="tabHeads">
               <TableRow>
                 <StyledTableCell>Customer Name</StyledTableCell>
                 <StyledTableCell>Scheme Name</StyledTableCell>

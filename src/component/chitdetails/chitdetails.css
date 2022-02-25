@@ -93,3 +93,6 @@
 .modalBody::-webkit-scrollbar-thumb {
   background: #2371ec;
 }
+.tabHeads th {
+  background-color: #7c7b7b !important;
+}

@@ -1,19 +1,15 @@
 import React from "react";
 import { Container } from "react-bootstrap";
 import "./footer.css";
-import CreditScoreIcon from "@mui/icons-material/CreditScore";
+// import CreditScoreIcon from "@mui/icons-material/CreditScore";
 
 function Footer(props) {
   return (
     <div className="footer">
       <Container>
-        <div className="d-flex justify-content-between">
-          <p style={{ color: "gray" }}>
-            Copyright © 2022 Life Insurance Corporation of India, All Rights
-            Reserved
-          </p>
-          <p style={{ color: "#1976d2", cursor: "pointer" }}>
-            Signature1.com <CreditScoreIcon />
+        <div>
+          <p style={{ color: "gray", textAlign: "center" }}>
+            Copyright © 2022 Lakshmi Jewellary, All Rights Reserved
           </p>
         </div>
       </Container>

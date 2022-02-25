@@ -43,7 +43,7 @@
   background-color: black;
 }
 .header .bottom .navs {
-  justify-content: space-evenly;
+  justify-content: space-between;
 }
 .header .bottom .navs a {
   color: white;

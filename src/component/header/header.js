@@ -44,7 +44,7 @@ function Header(props) {
         className="navTab"
         fixed="top"
       >
-        <Container fluid>
+        <Container>
           <Navbar.Brand href="#home">
             <img src={Logo} alt="mn" style={{ height: "48px" }} />
           </Navbar.Brand>
@@ -108,7 +108,7 @@ function Header(props) {
       </Navbar>
       <br />
       <div className="bottom">
-        <div>
+        <Container>
           <Nav
             activeKey="/home"
             onSelect={(selectedKey) => alert(`selected ${selectedKey}`)}
@@ -143,7 +143,7 @@ function Header(props) {
               </Nav.Link>
             </Nav.Item>
           </Nav>
-        </div>
+        </Container>
       </div>
     </div>
   );

@@ -31,6 +31,8 @@ function Header(props) {
   const now = new Date();
   const date = moment(now).format("MMMM Do YYYY, h:mm:ss a");
   const logOut = () => {
+    localStorage.removeItem("auth");
+    localStorage.removeItem("user");
     navigate("/");
   };
   return (

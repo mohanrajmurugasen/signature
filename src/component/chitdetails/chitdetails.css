@@ -32,6 +32,9 @@
   float: right;
   display: flex;
 }
+.pending .paginate {
+  padding-bottom: 40px;
+}
 .pending .paginate ul li {
   border: 1px solid darkgray;
   padding: 6px 16px;

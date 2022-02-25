@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
 import authAxios from "../interceptor/interceptor";
 import { styled } from "@mui/material/styles";
 import Table from "@mui/material/Table";
@@ -58,29 +57,23 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   "&:nth-of-type(odd)": {
     backgroundColor: theme.palette.action.hover,
   },
-  // hide last border
   "&:last-child td, &:last-child th": {
     border: 0,
   },
 }));
 
-function Pending(props) {
+function QuickPay(props) {
   const user = JSON.parse(JSON.stringify(localStorage.getItem("user")));
-  const phone = useSelector((state) => state.phoneProducts.phone);
-  const [modalShow, setModalShow] = React.useState(false);
   const [datas, setDatas] = useState([]);
+  const [modalShow, setModalShow] = React.useState(false);
   useEffect(() => {
     authAxios
       .post("chit_customer_collection_due_list", { mobile_no: `${user}` })
       .then((res) => {
-        res.data.data
-          .filter((nam) => nam.chit_scheme_name === phone)
-          .map((itm) => {
-            return setDatas((datas) => [...datas, itm]);
-          });
+        setDatas(res.data.data);
       })
       .catch((err) => console.error(err.message));
-  }, [user, phone]);
+  }, [user]);
 
   const [currentItems, setCurrentItems] = useState(null);
   const [pageCount, setPageCount] = useState(0);
@@ -162,4 +155,4 @@ function Pending(props) {
   );
 }
 
-export default Pending;
+export default QuickPay;

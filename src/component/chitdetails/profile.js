@@ -1,18 +1,11 @@
 import React, { useEffect } from "react";
 import { Col, Container, Modal, Row } from "react-bootstrap";
 import "./chitdetails.css";
-import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
-import CardActions from "@mui/material/CardActions";
-import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
-import { Avatar, Divider, Link } from "@mui/material";
-import LocalPrintshopIcon from "@mui/icons-material/LocalPrintshop";
+import { Divider } from "@mui/material";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
-import CurrencyRupeeIcon from "@mui/icons-material/CurrencyRupee";
 import authAxios from "../interceptor/interceptor";
-import { useSelector } from "react-redux";
 
 function MyVerticallyCenteredModal(props) {
   return (
@@ -82,10 +75,13 @@ function ProfileDetail(props) {
         setdatas(res.data.index);
       })
       .catch((err) => console.error(err.message));
-  }, []);
-  console.log(datas);
+  }, [user]);
+  const height = window.innerHeight;
   return (
-    <div className="chitdetail pt-3 pb-3">
+    <div
+      className="chitdetail pt-3 pb-3"
+      style={{ height: height - 191, overflow: "auto" }}
+    >
       <Container>
         <div>
           <Row style={{ justifyContent: "center" }}>

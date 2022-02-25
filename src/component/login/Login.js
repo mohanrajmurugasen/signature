@@ -13,8 +13,6 @@ import Logo from "../../assets/img/logo.png";
 import "./login.css";
 import Banner from "../../assets/img/banner2.jpg";
 import authAxios from "../interceptor/interceptor";
-import { useDispatch } from "react-redux";
-import { addPhone } from "../../redux/action/action";
 
 function Copyright(props) {
   return (
@@ -37,11 +35,10 @@ function Copyright(props) {
 const theme = createTheme();
 
 export default function Login() {
-  const [name, setname] = React.useState("");
-  const [user, setuser] = React.useState("");
-  const [password, setpassword] = React.useState("");
+  const [name, setname] = React.useState("lj");
+  const [user, setuser] = React.useState("9790016466");
+  const [password, setpassword] = React.useState("9790016466");
   const navigate = useNavigate();
-  const dispatch = useDispatch();
   const submit = () => {
     const datas = {
       corporate_name: `${name}`,
@@ -119,6 +116,7 @@ export default function Login() {
                   name="text"
                   autoComplete="email"
                   autoFocus
+                  value={name}
                   onChange={(e) => setname(e.target.value)}
                 />
                 <TextField
@@ -130,6 +128,7 @@ export default function Login() {
                   type="text"
                   id="password"
                   autoComplete="current-password"
+                  value={user}
                   onChange={(e) => setuser(e.target.value)}
                 />
                 <TextField
@@ -141,6 +140,7 @@ export default function Login() {
                   type="text"
                   id="password"
                   autoComplete="current-password"
+                  value={password}
                   onChange={(e) => setpassword(e.target.value)}
                 />
                 <Button

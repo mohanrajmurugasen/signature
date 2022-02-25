@@ -1,3 +1,3 @@
-const baseURL = "http://devaurum.adwayit.in/api/";
+const baseURL = "https://devaurum.adwayit.com/api/";
 
 export default baseURL;

@@ -1,56 +1,24 @@
 import React, { useEffect } from "react";
-import { Col, Container, Modal, Row } from "react-bootstrap";
+import { Col, Container, Row } from "react-bootstrap";
 import "./chitdetails.css";
-import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
-import { Avatar, Divider, Link } from "@mui/material";
-import LocalPrintshopIcon from "@mui/icons-material/LocalPrintshop";
+import { Avatar, Divider } from "@mui/material";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import CurrencyRupeeIcon from "@mui/icons-material/CurrencyRupee";
 import { useDispatch } from "react-redux";
-import { addHead } from "../../redux/action/action";
+import { addHead, addPhone } from "../../redux/action/action";
 import authAxios from "../interceptor/interceptor";
 
-function MyVerticallyCenteredModal(props) {
-  return (
-    <Modal
-      {...props}
-      size="lg"
-      aria-labelledby="contained-modal-title-vcenter"
-      centered
-    >
-      <Modal.Header closeButton>
-        <Modal.Title id="contained-modal-title-vcenter">
-          Modal heading
-        </Modal.Title>
-      </Modal.Header>
-      <Modal.Body>
-        <h4>Centered Modal</h4>
-        <p>
-          Cras mattis consectetur purus sit amet fermentum. Cras justo odio,
-          dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac
-          consectetur ac, vestibulum at eros.
-        </p>
-      </Modal.Body>
-      <Modal.Footer>
-        <Button onClick={props.onHide}>Close</Button>
-      </Modal.Footer>
-    </Modal>
-  );
-}
-
 function ChitDetail(props) {
-  const [modalShow, setModalShow] = React.useState(false);
-  const [datas, setdatas] = React.useState([]);
+  // const [datas, setdatas] = React.useState([]);
   const [listChits, setlistChits] = React.useState([]);
-  const name = [{ no: 1 }, { no: 2 }, { no: 3 }];
   const dispatch = useDispatch();
-  const chitList = () => {
+  const chitList = (x) => {
     dispatch(addHead("pending"));
+    dispatch(addPhone(x));
   };
   const user = JSON.parse(JSON.stringify(localStorage.getItem("user")));
   const uniqueNames = Array.from(
@@ -65,7 +33,7 @@ function ChitDetail(props) {
       .post("chit_customer_collection_due_list", { mobile_no: `${user}` })
       .then((res) => {
         // console.log(res.data.data);
-        setdatas(res.data.data);
+        // setdatas(res.data.data);
         res.data.data.map((itm) => {
           return setlistChits((listChits) => [
             ...listChits,
@@ -75,9 +43,13 @@ function ChitDetail(props) {
       })
       .catch((err) => console.error(err.message));
   }, [user]);
-  console.log(uniqueNames);
+  const height = window.innerHeight;
+  // console.log(datas);
   return (
-    <div className="chitdetail pt-3 pb-3">
+    <div
+      className="chitdetail pt-3 pb-3"
+      style={{ height: height - 191, overflow: "auto" }}
+    >
       <Container>
         <div>
           <Row style={{ justifyContent: "center" }}>
@@ -120,8 +92,7 @@ function ChitDetail(props) {
                             <div className="viewDetails">
                               <Button
                                 variant="outlined"
-                                // onClick={() => setModalShow(true)}
-                                onClick={chitList}
+                                onClick={() => chitList(itm)}
                               >
                                 View Details
                               </Button>
@@ -233,10 +204,6 @@ function ChitDetail(props) {
             </Col>
           </Row>
         </div>
-        <MyVerticallyCenteredModal
-          show={modalShow}
-          onHide={() => setModalShow(false)}
-        />
       </Container>
     </div>
   );

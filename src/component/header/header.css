@@ -8,7 +8,18 @@
 }
 .header .navbar-dark .navbar-toggler {
   color: #1355b5;
-  border-color: #1355b5;
+  border-color: black;
+}
+@media screen and (max-width: 991px) {
+  .header .navbar-collapse {
+    height: 100vh;
+  }
+  .header .navbar-nav {
+    width: 100% !important;
+  }
+}
+.navbar-dark .navbar-toggler-icon {
+  background-image: url("../../assets/img/bar.png") !important;
 }
 .navbar-nav {
   float: right;
@@ -43,5 +54,14 @@
 .header .bottom .navs a svg {
   color: gray;
   margin-right: 5px;
-  margin-top: -2px;
+  margin-top: -6px;
+}
+@media screen and (max-width: 580px) {
+  .header .bottom .navs a span {
+    display: none;
+  }
+  .header .bottom .navs a svg {
+    color: whitesmoke;
+    margin-top: 0px !important;
+  }
 }

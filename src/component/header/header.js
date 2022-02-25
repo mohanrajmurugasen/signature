@@ -15,6 +15,7 @@ import PersonIcon from "@mui/icons-material/Person";
 import CurrencyRupeeIcon from "@mui/icons-material/CurrencyRupee";
 import { useDispatch } from "react-redux";
 import { addHead } from "../../redux/action/action";
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 
 function Header(props) {
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -61,12 +62,19 @@ function Header(props) {
                   Last Login: <span>{date}</span>
                 </Button>
               </Nav.Link>
-              <Nav.Link>
-                <Stack direction="row" spacing={2}>
+              <Nav.Link
+                eventKey={2}
+                href="#memes"
+                className="d-flex"
+                style={{ color: "black" }}
+              >
+                <Stack
+                  direction="row"
+                  spacing={2}
+                  style={{ marginRight: "8px" }}
+                >
                   <Avatar>H</Avatar>
                 </Stack>
-              </Nav.Link>
-              <Nav.Link eventKey={2} href="#memes" style={{ color: "black" }}>
                 <Button
                   id="basic-button"
                   aria-controls={open ? "basic-menu" : undefined}
@@ -75,7 +83,7 @@ function Header(props) {
                   onClick={handleClick}
                   className="buttons"
                 >
-                  Welcome to P.Vijaykumar
+                  Welcome to P.Vijaykumar <KeyboardArrowDownIcon />
                 </Button>
               </Nav.Link>
 
@@ -107,29 +115,29 @@ function Header(props) {
             <Nav.Item>
               <Nav.Link onClick={() => dispatch(addHead("home"))}>
                 <HomeIcon />
-                Home
+                <span>Home</span>
               </Nav.Link>
             </Nav.Item>
             <Nav.Item>
               <Nav.Link onClick={() => dispatch(addHead("totalChit"))}>
                 <AutoAwesomeMosaicIcon />
-                Total chit
+                <span>Total chit</span>
               </Nav.Link>
             </Nav.Item>
             <Nav.Item>
               <Nav.Link onClick={() => dispatch(addHead("profile"))}>
                 <PersonIcon />
-                Profile
+                <span>Profile</span>
               </Nav.Link>
             </Nav.Item>
             <Nav.Item>
               <Nav.Link onClick={() => dispatch(addHead("help"))}>
-                <HelpIcon /> Help
+                <HelpIcon /> <span>Help</span>
               </Nav.Link>
             </Nav.Item>
             <Nav.Item>
-              <Nav.Link onClick={() => dispatch(addHead("quick"))}>
-                <CurrencyRupeeIcon /> Quick Pay
+              <Nav.Link onClick={() => dispatch(addHead("quickpay"))}>
+                <CurrencyRupeeIcon /> <span>Quick Pay</span>
               </Nav.Link>
             </Nav.Item>
           </Nav>

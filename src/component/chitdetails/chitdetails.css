@@ -59,3 +59,37 @@
   background-color: #1976d2;
   color: white;
 }
+.modal-dialog {
+  max-width: 400px !important;
+  margin: auto !important;
+}
+.payUser p {
+  margin-bottom: 0px !important;
+  color: gray;
+  font-weight: 300;
+}
+.payUser input {
+  border-bottom: 1px solid darkgray;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  width: 100%;
+}
+.payUser input:focus {
+  outline: none;
+}
+.titlePay svg {
+  margin-right: 20px;
+  margin-top: -4px;
+  cursor: pointer;
+}
+.titlePay p {
+  margin-top: 10px;
+  margin-bottom: 0px;
+}
+.modalBody::-webkit-scrollbar {
+  width: 5px;
+}
+.modalBody::-webkit-scrollbar-thumb {
+  background: #2371ec;
+}

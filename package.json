@@ -1,5 +1,6 @@
 {
   "name": "my-app",
+  "homepage": "https://app.dopemusic.live/",
   "version": "0.1.0",
   "private": true,
   "dependencies": {

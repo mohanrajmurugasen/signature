@@ -1,42 +1,12 @@
 import React, { useEffect } from "react";
-import { Col, Container, Modal, Row } from "react-bootstrap";
+import { Col, Container, Row } from "react-bootstrap";
 import "./chitdetails.css";
 import Card from "@mui/material/Card";
-import Button from "@mui/material/Button";
 import { Divider } from "@mui/material";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import authAxios from "../interceptor/interceptor";
 
-function MyVerticallyCenteredModal(props) {
-  return (
-    <Modal
-      {...props}
-      size="lg"
-      aria-labelledby="contained-modal-title-vcenter"
-      centered
-    >
-      <Modal.Header closeButton>
-        <Modal.Title id="contained-modal-title-vcenter">
-          Modal heading
-        </Modal.Title>
-      </Modal.Header>
-      <Modal.Body>
-        <h4>Centered Modal</h4>
-        <p>
-          Cras mattis consectetur purus sit amet fermentum. Cras justo odio,
-          dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac
-          consectetur ac, vestibulum at eros.
-        </p>
-      </Modal.Body>
-      <Modal.Footer>
-        <Button onClick={props.onHide}>Close</Button>
-      </Modal.Footer>
-    </Modal>
-  );
-}
-
 function ProfileDetail(props) {
-  const [modalShow, setModalShow] = React.useState(false);
   const [datas, setdatas] = React.useState([]);
   const user = JSON.parse(JSON.stringify(localStorage.getItem("user")));
   const name = [
@@ -397,10 +367,6 @@ function ProfileDetail(props) {
             </Col>
           </Row>
         </div>
-        <MyVerticallyCenteredModal
-          show={modalShow}
-          onHide={() => setModalShow(false)}
-        />
       </Container>
     </div>
   );

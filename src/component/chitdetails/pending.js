@@ -15,34 +15,8 @@ import ReactPaginate from "react-paginate";
 import "./chitdetails.css";
 import ArrowBackIosNewIcon from "@mui/icons-material/KeyboardDoubleArrowLeft";
 import ArrowForwardIcon from "@mui/icons-material/KeyboardDoubleArrowRight";
-
-function MyVerticallyCenteredModal(props) {
-  return (
-    <Modal
-      {...props}
-      size="lg"
-      aria-labelledby="contained-modal-title-vcenter"
-      centered
-    >
-      <Modal.Header closeButton>
-        <Modal.Title id="contained-modal-title-vcenter">
-          Modal heading
-        </Modal.Title>
-      </Modal.Header>
-      <Modal.Body>
-        <h4>Centered Modal</h4>
-        <p>
-          Cras mattis consectetur purus sit amet fermentum. Cras justo odio,
-          dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac
-          consectetur ac, vestibulum at eros.
-        </p>
-      </Modal.Body>
-      <Modal.Footer>
-        <Button onClick={props.onHide}>Close</Button>
-      </Modal.Footer>
-    </Modal>
-  );
-}
+import CloseIcon from "@mui/icons-material/Close";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -68,6 +42,8 @@ function Pending(props) {
   const user = JSON.parse(JSON.stringify(localStorage.getItem("user")));
   const phone = useSelector((state) => state.phoneProducts.phone);
   const [modalShow, setModalShow] = React.useState(false);
+  const [payments, setpayments] = React.useState(null);
+  const [payCount, setpayCount] = React.useState(1);
   const [datas, setDatas] = useState([]);
   useEffect(() => {
     authAxios
@@ -89,7 +65,6 @@ function Pending(props) {
 
   useEffect(() => {
     const endOffset = itemOffset + itemsPerPage;
-    console.log(`Loading items from ${itemOffset} to ${endOffset}`);
     setCurrentItems(datas.slice(itemOffset, endOffset));
     setPageCount(Math.ceil(datas.length / itemsPerPage));
   }, [itemOffset, itemsPerPage, datas]);
@@ -102,6 +77,25 @@ function Pending(props) {
     setItemOffset(newOffset);
   };
   const height = window.innerHeight;
+
+  const payNow = (itm) => {
+    setpayments(itm.due_amount);
+    setModalShow(true);
+  };
+
+  const nextSubmit = () => {
+    if (payCount < 3) {
+      setpayCount(payCount + 1);
+    } else {
+      alert("Hi");
+    }
+  };
+
+  const back = () => {
+    if (payCount !== 0) {
+      setpayCount(payCount - 1);
+    }
+  };
 
   return (
     <div
@@ -131,10 +125,7 @@ function Pending(props) {
                     <StyledTableCell>{row.chit_code_name}</StyledTableCell>
                     <StyledTableCell>{row.due_amount}</StyledTableCell>
                     <StyledTableCell style={{ width: "150px" }}>
-                      <Button
-                        variant="contained"
-                        onClick={() => setModalShow(true)}
-                      >
+                      <Button variant="contained" onClick={() => payNow(row)}>
                         Pay Now
                       </Button>
                     </StyledTableCell>
@@ -153,10 +144,108 @@ function Pending(props) {
             renderOnZeroPageCount={null}
           />
         </div>
-        <MyVerticallyCenteredModal
+        <Modal
           show={modalShow}
-          onHide={() => setModalShow(false)}
-        />
+          size="lg"
+          aria-labelledby="contained-modal-title-vcenter"
+          centered
+        >
+          <Modal.Header
+            style={{ backgroundColor: "rgb(35,113,236)", color: "white" }}
+          >
+            <Modal.Title
+              id="contained-modal-title-vcenter"
+              className="d-flex justify-content-between titlePay"
+              style={{ width: "100%", fontSize: "18px" }}
+            >
+              {payCount === 1 ? (
+                <div>
+                  Amount Details
+                  <br />
+                  <p>
+                    lakshmi Jewellary
+                    <br />₹ {payments}
+                  </p>
+                </div>
+              ) : payCount === 2 ? (
+                <div>
+                  <ArrowBackIcon onClick={back} /> User Details
+                  <br />
+                  <p>
+                    lakshmi Jewellary
+                    <br />₹ {payments}
+                  </p>
+                </div>
+              ) : (
+                <div>
+                  <ArrowBackIcon onClick={back} /> Payment Method
+                  <br />
+                  <p>
+                    lakshmi Jewellary
+                    <br />₹ {payments}
+                  </p>
+                </div>
+              )}
+              <div>
+                <CloseIcon
+                  style={{ cursor: "pointer" }}
+                  onClick={() => {
+                    setModalShow(false);
+                    setpayCount(1);
+                  }}
+                />
+              </div>
+            </Modal.Title>
+          </Modal.Header>
+          <Modal.Body
+            style={{ height: "350px", overflow: "auto" }}
+            className="modalBody"
+          >
+            {payCount === 1 ? (
+              <div>
+                <p>
+                  <b>Amount</b>
+                </p>
+                <Button fullWidth variant="outlined" style={{ color: "black" }}>
+                  ₹ {payments}
+                </Button>
+              </div>
+            ) : payCount === 2 ? (
+              <div className="payUser">
+                <p>
+                  <b>
+                    Email <span className="text-danger">*</span>
+                  </b>
+                </p>
+                <input />
+                <p className="mt-3">
+                  <b>
+                    Phone <span className="text-danger">*</span>
+                  </b>
+                </p>
+                <input />
+              </div>
+            ) : (
+              <div>
+                <p>
+                  <b>rgrgreg</b>
+                </p>
+                <Button fullWidth variant="outlined" style={{ color: "black" }}>
+                  ₹ {payments}
+                </Button>
+              </div>
+            )}
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="contained" fullWidth onClick={() => nextSubmit()}>
+              {payCount === 3
+                ? `Pay ₹ ${payments}`
+                : payCount === 2
+                ? "Proceed To Pay"
+                : `Next`}
+            </Button>
+          </Modal.Footer>
+        </Modal>
       </Container>
     </div>
   );

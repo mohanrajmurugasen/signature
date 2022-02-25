@@ -35,9 +35,9 @@ function Copyright(props) {
 const theme = createTheme();
 
 export default function Login() {
-  const [name, setname] = React.useState("lj");
-  const [user, setuser] = React.useState("9790016466");
-  const [password, setpassword] = React.useState("9790016466");
+  const [name, setname] = React.useState("");
+  const [user, setuser] = React.useState("");
+  const [password, setpassword] = React.useState("");
   const navigate = useNavigate();
   const submit = () => {
     const datas = {

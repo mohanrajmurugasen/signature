@@ -13,3 +13,17 @@ export const addPhone = (phone) => {
     payload: phone,
   };
 };
+
+export const addId = (id) => {
+  return {
+    type: Type.ID,
+    payload: id,
+  };
+};
+
+export const addCust = (cust) => {
+  return {
+    type: Type.CUST,
+    payload: cust,
+  };
+};

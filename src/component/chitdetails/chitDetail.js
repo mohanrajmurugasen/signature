@@ -8,41 +8,41 @@ import Button from "@mui/material/Button";
 import { Avatar, Divider } from "@mui/material";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import CurrencyRupeeIcon from "@mui/icons-material/CurrencyRupee";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addHead, addPhone } from "../../redux/action/action";
 import authAxios from "../interceptor/interceptor";
 
 function ChitDetail(props) {
-  // const [datas, setdatas] = React.useState([]);
-  const [listChits, setlistChits] = React.useState([]);
+  const [datas, setdatas] = React.useState([]);
   const dispatch = useDispatch();
-  const chitList = (x) => {
+  const chitList = (x, y, z) => {
     dispatch(addHead("pending"));
-    dispatch(addPhone(x));
-  };
-  const user = JSON.parse(JSON.stringify(localStorage.getItem("user")));
-  const uniqueNames = Array.from(
-    new Set(
-      listChits.map((itm) => {
-        return itm.scheme;
+    dispatch(
+      addPhone({
+        x: x,
+        y: y,
+        z: z,
       })
-    )
-  );
+    );
+  };
+  const id = useSelector((state) => state.idProducts.id);
   useEffect(() => {
     authAxios
-      .post("chit_customer_collection_due_list", { mobile_no: `${user}` })
+      .post("chit_customer_list", {
+        searchField: "customers.id",
+        dataType: "str",
+        search: `${id}`,
+        is_search: 1,
+        CurrentPageNumber: 1,
+        PageSize: 25,
+        show_only_current_chit: 1,
+      })
       .then((res) => {
-        // console.log(res.data.data);
-        // setdatas(res.data.data);
-        res.data.data.map((itm) => {
-          return setlistChits((listChits) => [
-            ...listChits,
-            { scheme: itm.chit_scheme_name },
-          ]);
-        });
+        console.log(res.data);
+        setdatas(res.data.index);
       })
       .catch((err) => console.error(err.message));
-  }, [user]);
+  }, [id]);
   const height = window.innerHeight;
   // console.log(datas);
   return (
@@ -64,8 +64,8 @@ function ChitDetail(props) {
           <Row style={{ justifyContent: "center" }}>
             <Col lg={8} md={10} sm={12}>
               <Row>
-                {uniqueNames &&
-                  uniqueNames.map((itm, index) => (
+                {datas &&
+                  datas.map((itm, index) => (
                     <Col key={index} lg={6} md={6} sm={12}>
                       <Card
                         sx={{ minWidth: 275, marginBottom: 5 }}
@@ -84,7 +84,7 @@ function ChitDetail(props) {
                               </Avatar>
                               <div className="ps-3 mt-1 chits">
                                 <h5>
-                                  <b>{itm}</b>
+                                  <b>{itm.chit_scheme_name}</b>
                                 </h5>
                               </div>
                             </div>
@@ -92,7 +92,13 @@ function ChitDetail(props) {
                             <div className="viewDetails">
                               <Button
                                 variant="outlined"
-                                onClick={() => chitList(itm)}
+                                onClick={() =>
+                                  chitList(
+                                    itm.chit_scheme_id,
+                                    itm.customer_id,
+                                    itm.chit_code_id
+                                  )
+                                }
                               >
                                 View Details
                               </Button>
@@ -104,9 +110,9 @@ function ChitDetail(props) {
                           <Row>
                             <Col lg={5} md={5} sm={5}>
                               <div>
-                                <p>Loan Amount (Rs)</p>
+                                <p>Chit Amount (Rs)</p>
                                 <span>
-                                  <b>14,890</b>
+                                  <b>₹ 5,00,000</b>
                                 </span>
                               </div>
                             </Col>
@@ -114,17 +120,20 @@ function ChitDetail(props) {
                               <div>
                                 <p>Pending Due</p>
                                 <span>
-                                  <b>14,890</b>
+                                  <b>{itm.pending_dues}</b>
                                 </span>
                               </div>
                             </Col>
                           </Row>
                         </div>
                         <Divider style={{ color: "darkgray" }} />
-                        <CardActions>
-                          <Button size="small">
-                            Loan Ending Date: &nbsp;
-                            <b className="text-dark">23-04:2022</b>
+                        <CardActions className="justify-content-between">
+                          <Button
+                            variant="outlined"
+                            size="small"
+                            onClick={() => dispatch(addHead("passbook"))}
+                          >
+                            View Passbook
                           </Button>
                         </CardActions>
                       </Card>

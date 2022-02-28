@@ -11,8 +11,9 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useNavigate } from "react-router-dom";
 import Logo from "../../assets/img/logo.png";
 import "./login.css";
-import Banner from "../../assets/img/banner2.jpg";
+import Banner from "../../assets/img/banner01.jpg";
 import authAxios from "../interceptor/interceptor";
+import { getAuth, RecaptchaVerifier } from "firebase/auth";
 
 function Copyright(props) {
   return (
@@ -35,8 +36,8 @@ function Copyright(props) {
 const theme = createTheme();
 
 export default function Login() {
-  const [name, setname] = React.useState("");
-  const [user, setuser] = React.useState("");
+  const [name, setname] = React.useState("lj");
+  const [user, setuser] = React.useState("9790016466");
   const [password, setpassword] = React.useState("");
   const navigate = useNavigate();
   const submit = () => {
@@ -58,6 +59,17 @@ export default function Login() {
         }
       })
       .catch((err) => console.error(err.message));
+  };
+
+  const auth = getAuth();
+
+  const setUpRecaptcha = () => {
+    const recaptchaVerifier = new RecaptchaVerifier(
+      "recaptcha-container",
+      {},
+      auth
+    );
+    recaptchaVerifier.render();
   };
 
   return (
@@ -90,53 +102,19 @@ export default function Login() {
             elevation={6}
             square
           >
-            <Box
-              sx={{
-                my: 8,
-                mx: 4,
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                position: "absolute",
-                top: "35%",
-                transform: "translateY(-40%)",
-              }}
-            >
+            <Box className="boxes">
               <img alt="Remy Sharp" src={Logo} style={{ width: 100 }} />
               <Typography component="h1" variant="h5" style={{ marginTop: 15 }}>
                 Sign in
               </Typography>
               <Box component="form" noValidate sx={{ mt: 1 }}>
-                <TextField
-                  margin="normal"
-                  required
-                  fullWidth
-                  id="email"
-                  label="Corporate_Name"
-                  name="text"
-                  autoComplete="email"
-                  autoFocus
-                  value={name}
-                  onChange={(e) => setname(e.target.value)}
-                />
+                <div id="recaptcha-container"></div>
                 <TextField
                   margin="normal"
                   required
                   fullWidth
                   name="password"
-                  label="User_Name"
-                  type="text"
-                  id="password"
-                  autoComplete="current-password"
-                  value={user}
-                  onChange={(e) => setuser(e.target.value)}
-                />
-                <TextField
-                  margin="normal"
-                  required
-                  fullWidth
-                  name="password"
-                  label="Password"
+                  label="Phone Number"
                   type="text"
                   id="password"
                   autoComplete="current-password"

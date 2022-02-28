@@ -115,7 +115,7 @@ function Header(props) {
             className="navs"
           >
             <Nav.Item>
-              <Nav.Link onClick={() => dispatch(addHead("home"))}>
+              <Nav.Link onClick={() => dispatch(addHead("main"))}>
                 <HomeIcon />
                 <span>Home</span>
               </Nav.Link>
@@ -123,7 +123,7 @@ function Header(props) {
             <Nav.Item>
               <Nav.Link onClick={() => dispatch(addHead("totalChit"))}>
                 <AutoAwesomeMosaicIcon />
-                <span>Total chit</span>
+                <span>Passbook</span>
               </Nav.Link>
             </Nav.Item>
             <Nav.Item>

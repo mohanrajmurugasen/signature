@@ -4,3 +4,13 @@
 .css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root.Mui-focused {
   color: #48382e !important;
 }
+.boxes {
+  width: 60%;
+  margin: auto;
+  position: relative;
+  top: 27%;
+  text-align: center;
+  box-shadow: 0 4px 8px 0 rgb(0 0 0 / 6%), 0 6px 20px 0 rgb(0 0 0 / 6%) !important;
+  border-radius: 4px;
+  padding: 35px;
+}

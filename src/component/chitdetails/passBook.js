@@ -10,14 +10,12 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { Container, Modal } from "react-bootstrap";
 import { Button } from "@mui/material";
-import ReactPaginate from "react-paginate";
 import "./chitdetails.css";
 import "./passbook.css";
-import ArrowBackIosNewIcon from "@mui/icons-material/KeyboardDoubleArrowLeft";
-import ArrowForwardIcon from "@mui/icons-material/KeyboardDoubleArrowRight";
 import CloseIcon from "@mui/icons-material/Close";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import PrintComponents from "react-print-components";
+import { useSelector } from "react-redux";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -40,24 +38,29 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 
 function PassBook(props) {
   const user = JSON.parse(JSON.stringify(localStorage.getItem("user")));
+  const cust = useSelector((state) => state.custProducts.cust);
   const [datas, setDatas] = useState([]);
   const [modalShow, setModalShow] = React.useState(false);
   const [payments, setpayments] = React.useState(null);
   const [payCount, setpayCount] = React.useState(1);
+  // useEffect(() => {
+  //   authAxios
+  //     .post("chit_customer_collection_due_list", { mobile_no: `${user}` })
+  //     .then((res) => {
+  //       setDatas(res.data.data);
+  //     })
+  //     .catch((err) => console.error(err.message));
+  // }, [user]);
   useEffect(() => {
     authAxios
-      .post("chit_customer_collection_due_list", { mobile_no: `${user}` })
+      .post("chit_collection_pass_book", { chit_code_id: cust })
       .then((res) => {
-        setDatas(res.data.data);
+        console.log(res.data);
+        setDatas(res.data);
       })
       .catch((err) => console.error(err.message));
-  }, [user]);
+  }, [cust]);
   const height = window.innerHeight;
-
-  const payNow = (itm) => {
-    setpayments(itm.due_amount);
-    setModalShow(true);
-  };
 
   const nextSubmit = () => {
     if (payCount < 3) {
@@ -82,7 +85,7 @@ function PassBook(props) {
             <StyledTableCell>Scheme Name</StyledTableCell>
             <StyledTableCell>Chit Code</StyledTableCell>
             <StyledTableCell>Due amount</StyledTableCell>
-            <StyledTableCell></StyledTableCell>
+            <StyledTableCell>Paid Amount</StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -95,11 +98,7 @@ function PassBook(props) {
                 <StyledTableCell>{row.chit_scheme_name}</StyledTableCell>
                 <StyledTableCell>{row.chit_code_name}</StyledTableCell>
                 <StyledTableCell>{row.due_amount}</StyledTableCell>
-                <StyledTableCell style={{ width: "150px" }}>
-                  <Button variant="contained" onClick={() => payNow(row)}>
-                    Pay Now
-                  </Button>
-                </StyledTableCell>
+                <StyledTableCell>{row.paid_amount}</StyledTableCell>
               </StyledTableRow>
             ))}
         </TableBody>

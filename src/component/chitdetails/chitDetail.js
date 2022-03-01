@@ -9,7 +9,7 @@ import { Avatar, Divider } from "@mui/material";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import CurrencyRupeeIcon from "@mui/icons-material/CurrencyRupee";
 import { useDispatch, useSelector } from "react-redux";
-import { addHead, addPhone } from "../../redux/action/action";
+import { addCust, addHead, addPhone } from "../../redux/action/action";
 import authAxios from "../interceptor/interceptor";
 
 function ChitDetail(props) {
@@ -38,7 +38,7 @@ function ChitDetail(props) {
         show_only_current_chit: 1,
       })
       .then((res) => {
-        console.log(res.data);
+        // console.log(res.data);
         setdatas(res.data.index);
       })
       .catch((err) => console.error(err.message));
@@ -131,7 +131,10 @@ function ChitDetail(props) {
                           <Button
                             variant="outlined"
                             size="small"
-                            onClick={() => dispatch(addHead("passbook"))}
+                            onClick={() => {
+                              dispatch(addHead("passbook"));
+                              dispatch(addCust(itm.chit_code_id));
+                            }}
                           >
                             View Passbook
                           </Button>

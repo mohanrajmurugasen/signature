@@ -13,7 +13,6 @@ import Logo from "../../assets/img/logo.png";
 import "./login.css";
 import Banner from "../../assets/img/banner01.jpg";
 import authAxios from "../interceptor/interceptor";
-import { getAuth, RecaptchaVerifier } from "firebase/auth";
 
 function Copyright(props) {
   return (
@@ -59,17 +58,6 @@ export default function Login() {
         }
       })
       .catch((err) => console.error(err.message));
-  };
-
-  const auth = getAuth();
-
-  const setUpRecaptcha = () => {
-    const recaptchaVerifier = new RecaptchaVerifier(
-      "recaptcha-container",
-      {},
-      auth
-    );
-    recaptchaVerifier.render();
   };
 
   return (

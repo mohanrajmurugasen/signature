@@ -88,8 +88,31 @@ function Pending(props) {
   const height = window.innerHeight;
 
   const payNow = (itm) => {
-    setpayments(itm.due_amount);
-    setModalShow(true);
+    // setpayments(itm.due_amount);
+    var options = {
+      key: "rzp_test_NW4GHgydEf9G2m",
+      key_secret: "5KFQQ1e18Gw4oPXdagItFUmi",
+      amount: itm.due_amount * 100,
+      currency: "INR",
+      name: "LAKSHMI_JEWELLARY",
+      description: "For pay due amount",
+      handler: function (response) {
+        console.log(response);
+      },
+      prefill: {
+        name: `${itm.customer_name}`,
+        email: `mohanraj1711999@gmail.com`,
+        contact: `8526738649`,
+      },
+      notes: {
+        address: "Razorpay Corporate office",
+      },
+      theme: {
+        color: "#3399cc",
+      },
+    };
+    var pay = new window.Razorpay(options);
+    pay.open();
   };
 
   const nextSubmit = () => {

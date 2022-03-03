@@ -42,8 +42,9 @@ function Pending(props) {
   const user = JSON.parse(JSON.stringify(localStorage.getItem("user")));
   const phone = useSelector((state) => state.phoneProducts.phone);
   const cust = useSelector((state) => state.custProducts.cust);
+  const head = useSelector((state) => state.headProducts.head);
   const [modalShow, setModalShow] = React.useState(false);
-  const [payments, setpayments] = React.useState(null);
+  const payments = null;
   const [payCount, setpayCount] = React.useState(1);
   const [datas, setDatas] = useState([]);
   // console.log(cust);
@@ -52,7 +53,7 @@ function Pending(props) {
     authAxios
       .post("chit_customer_collection_due_list", { mobile_no: `${user}` })
       .then((res) => {
-        // console.log(res.data.data);
+        console.log(res.data.data);
         res.data.data
           .filter(
             (nam) =>
@@ -88,16 +89,34 @@ function Pending(props) {
   const height = window.innerHeight;
 
   const payNow = (itm) => {
-    // setpayments(itm.due_amount);
     var options = {
       key: "rzp_test_NW4GHgydEf9G2m",
       key_secret: "5KFQQ1e18Gw4oPXdagItFUmi",
       amount: itm.due_amount * 100,
       currency: "INR",
-      name: "LAKSHMI_JEWELLARY",
-      description: "For pay due amount",
+      name: "Amount Details",
+      description: "Lakshmi Jewellary",
       handler: function (response) {
-        console.log(response);
+        const transaction = {
+          txn_no: response.razorpay_payment_id,
+          card_holder_name: `${itm.customer_name}`,
+          paid_amount: `${itm.paid_amount}`,
+          transaction_details: [
+            {
+              id: itm.id,
+              collection_id: itm.collection_id,
+              customer_id: itm.customer_id,
+              chit_scheme_id: itm.chit_scheme_id,
+              due_no: `${itm.due_no}`,
+            },
+          ],
+        };
+        authAxios
+          .post("store_payment_details", transaction)
+          .then((val) => {
+            console.log(val.data);
+          })
+          .catch((err) => console.error(err.message));
       },
       prefill: {
         name: `${itm.customer_name}`,
@@ -135,14 +154,14 @@ function Pending(props) {
       style={{ height: height - 191, overflow: "auto" }}
     >
       <Container>
+        <div className="d-flex justify-content-between">
+          <h5>Name: {head}</h5>
+        </div>
         <TableContainer component={Paper}>
           <Table sx={{ minWidth: 700 }} aria-label="customized table">
             <TableHead className="tabHeads">
               <TableRow>
                 <StyledTableCell>No</StyledTableCell>
-                <StyledTableCell>Customer Name</StyledTableCell>
-                <StyledTableCell>Scheme Name</StyledTableCell>
-                <StyledTableCell>Chit Code</StyledTableCell>
                 <StyledTableCell>Due Date</StyledTableCell>
                 <StyledTableCell>Due amount</StyledTableCell>
                 <StyledTableCell></StyledTableCell>
@@ -153,11 +172,6 @@ function Pending(props) {
                 currentItems.map((row, index) => (
                   <StyledTableRow key={index}>
                     <StyledTableCell>{index + 1}</StyledTableCell>
-                    <StyledTableCell component="th" scope="row">
-                      {row.customer_name}
-                    </StyledTableCell>
-                    <StyledTableCell>{row.chit_scheme_name}</StyledTableCell>
-                    <StyledTableCell>{row.chit_code_name}</StyledTableCell>
                     <StyledTableCell>{row.due_date}</StyledTableCell>
                     <StyledTableCell>{row.due_amount}</StyledTableCell>
                     <StyledTableCell style={{ width: "150px" }}>

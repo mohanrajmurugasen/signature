@@ -37,25 +37,19 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 function PassBook(props) {
-  const user = JSON.parse(JSON.stringify(localStorage.getItem("user")));
   const cust = useSelector((state) => state.custProducts.cust);
+  const head = useSelector((state) => state.headProducts.head);
+  const passbook = useSelector((state) => state.pasbookProducts.passbook);
   const [datas, setDatas] = useState([]);
   const [modalShow, setModalShow] = React.useState(false);
-  const [payments, setpayments] = React.useState(null);
+  const payments = null;
   const [payCount, setpayCount] = React.useState(1);
-  // useEffect(() => {
-  //   authAxios
-  //     .post("chit_customer_collection_due_list", { mobile_no: `${user}` })
-  //     .then((res) => {
-  //       setDatas(res.data.data);
-  //     })
-  //     .catch((err) => console.error(err.message));
-  // }, [user]);
+
   useEffect(() => {
     authAxios
       .post("chit_collection_pass_book", { chit_code_id: cust })
       .then((res) => {
-        console.log(res.data);
+        // console.log(res.data);
         setDatas(res.data);
       })
       .catch((err) => console.error(err.message));
@@ -81,11 +75,15 @@ function PassBook(props) {
       <Table sx={{ minWidth: 700 }} aria-label="customized table">
         <TableHead className="tabHeads">
           <TableRow>
-            <StyledTableCell>Customer Name</StyledTableCell>
-            <StyledTableCell>Scheme Name</StyledTableCell>
-            <StyledTableCell>Chit Code</StyledTableCell>
-            <StyledTableCell>Due amount</StyledTableCell>
-            <StyledTableCell>Paid Amount</StyledTableCell>
+            <StyledTableCell>Rcpt Date</StyledTableCell>
+            <StyledTableCell>Rcpt No.</StyledTableCell>
+            <StyledTableCell>Due Amount</StyledTableCell>
+            <StyledTableCell>Due Weight</StyledTableCell>
+            <StyledTableCell>Rate</StyledTableCell>
+            <StyledTableCell>Weight</StyledTableCell>
+            <StyledTableCell>Total Weight</StyledTableCell>
+            <StyledTableCell>Payment Type</StyledTableCell>
+            <StyledTableCell>Sign</StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -93,12 +91,16 @@ function PassBook(props) {
             datas.map((row, index) => (
               <StyledTableRow key={index}>
                 <StyledTableCell component="th" scope="row">
-                  {row.customer_name}
+                  {row.receipt_date}
                 </StyledTableCell>
-                <StyledTableCell>{row.chit_scheme_name}</StyledTableCell>
-                <StyledTableCell>{row.chit_code_name}</StyledTableCell>
+                <StyledTableCell>{row.receipt_no}</StyledTableCell>
                 <StyledTableCell>{row.due_amount}</StyledTableCell>
-                <StyledTableCell>{row.paid_amount}</StyledTableCell>
+                <StyledTableCell>{row.due_weight}</StyledTableCell>
+                <StyledTableCell>{row.rate}</StyledTableCell>
+                <StyledTableCell>{row.weight}</StyledTableCell>
+                <StyledTableCell>{row.total_weight}</StyledTableCell>
+                <StyledTableCell>{row.payment_type}</StyledTableCell>
+                <StyledTableCell></StyledTableCell>
               </StyledTableRow>
             ))}
         </TableBody>
@@ -113,9 +115,22 @@ function PassBook(props) {
     >
       <Container>
         <div className="d-flex justify-content-between">
-          <h4 className="pt-3 pb-2">
-            <b>DhanaSri</b>
-          </h4>
+          <h6 className="pt-3 pb-2">
+            <b>Name: </b>
+            {head}
+          </h6>
+          <h6 className="pt-3 pb-2">
+            <b>Joining Date: </b>
+            {passbook.join_date}
+          </h6>
+          <h6 className="pt-3 pb-2">
+            <b>Code: </b>
+            {passbook.chit_code}
+          </h6>
+          <h6 className="pt-3 pb-2">
+            <b>Maturity Date: </b>
+            {passbook.maturity_date}
+          </h6>
           <PrintComponents
             trigger={
               <Button variant="outlined" className="printer">

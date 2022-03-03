@@ -3,4 +3,5 @@ export const Type = {
   PHONE: "PHONE",
   ID: "ID",
   CUST: "CUST",
+  PASSBOOK: "PASSBOOK",
 };

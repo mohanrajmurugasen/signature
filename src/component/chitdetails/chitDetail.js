@@ -9,14 +9,15 @@ import { Avatar, Divider } from "@mui/material";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import CurrencyRupeeIcon from "@mui/icons-material/CurrencyRupee";
 import { useDispatch, useSelector } from "react-redux";
-import { addCust, addHead, addPhone } from "../../redux/action/action";
+import { addCust, addPassbook, addPhone } from "../../redux/action/action";
 import authAxios from "../interceptor/interceptor";
+import { useNavigate } from "react-router-dom";
 
 function ChitDetail(props) {
   const [datas, setdatas] = React.useState([]);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const chitList = (x, y, z) => {
-    dispatch(addHead("pending"));
     dispatch(
       addPhone({
         x: x,
@@ -24,8 +25,14 @@ function ChitDetail(props) {
         z: z,
       })
     );
+    navigate("/pending");
   };
   const id = useSelector((state) => state.idProducts.id);
+
+  const handleClick = (x) => {
+    window.open(x);
+  };
+
   useEffect(() => {
     authAxios
       .post("chit_customer_list", {
@@ -88,36 +95,33 @@ function ChitDetail(props) {
                                 </h5>
                               </div>
                             </div>
-
-                            <div className="viewDetails">
-                              <Button
-                                variant="outlined"
-                                onClick={() =>
-                                  chitList(
-                                    itm.chit_scheme_id,
-                                    itm.customer_id,
-                                    itm.chit_code_id
-                                  )
-                                }
-                              >
-                                View Details
-                              </Button>
-                            </div>
                           </div>
                         </CardContent>
                         <Divider style={{ color: "darkgray" }} />
-                        <div className="pt-4 pb-4 ps-3">
+                        <div className="pt-4 pb-4">
                           <Row>
-                            <Col lg={5} md={5} sm={5}>
-                              <div>
-                                <p>Chit Amount (Rs)</p>
+                            <Col lg={4} md={4} sm={4}>
+                              <div className="text-center">
+                                <p>No. Months</p>
                                 <span>
-                                  <b>₹ 5,00,000</b>
+                                  <b>{itm.no_of_months}</b>
                                 </span>
                               </div>
                             </Col>
-                            <Col lg={6} md={6} sm={6}>
-                              <div>
+                            <Col lg={4} md={4} sm={4}>
+                              <div className="text-center">
+                                <p>Due Amount</p>
+                                <span>
+                                  <b>
+                                    {itm.monthly_due === 0
+                                      ? `₹ ${itm.monthly_due_weight}`
+                                      : `₹ ${itm.monthly_due}`}
+                                  </b>
+                                </span>
+                              </div>
+                            </Col>
+                            <Col lg={4} md={4} sm={4}>
+                              <div className="text-center">
                                 <p>Pending Due</p>
                                 <span>
                                   <b>{itm.pending_dues}</b>
@@ -132,12 +136,27 @@ function ChitDetail(props) {
                             variant="outlined"
                             size="small"
                             onClick={() => {
-                              dispatch(addHead("passbook"));
                               dispatch(addCust(itm.chit_code_id));
+                              dispatch(addPassbook(itm));
+                              navigate("/passbook");
                             }}
                           >
                             View Passbook
                           </Button>
+                          <div className="viewDetails">
+                            <Button
+                              variant="outlined"
+                              onClick={() =>
+                                chitList(
+                                  itm.chit_scheme_id,
+                                  itm.customer_id,
+                                  itm.chit_code_id
+                                )
+                              }
+                            >
+                              Pay Now
+                            </Button>
+                          </div>
                         </CardActions>
                       </Card>
                     </Col>
@@ -160,7 +179,10 @@ function ChitDetail(props) {
                   className="ps-2 pt-3"
                   style={{ marginRight: 5, cursor: "pointer" }}
                 >
-                  <div className="d-flex justify-content-between">
+                  <div
+                    className="d-flex justify-content-between"
+                    onClick={() => navigate("/quickpay")}
+                  >
                     <p style={{ fontSize: "small" }}>
                       <b>Quick Pay</b>
                     </p>
@@ -178,7 +200,14 @@ function ChitDetail(props) {
                   className="ps-2 pt-3"
                   style={{ marginRight: 5, cursor: "pointer" }}
                 >
-                  <div className="d-flex justify-content-between">
+                  <div
+                    className="d-flex justify-content-between"
+                    onClick={() =>
+                      handleClick(
+                        "https://lakshmijewellery.co.in/contact-us.php"
+                      )
+                    }
+                  >
                     <p style={{ fontSize: "small" }}>
                       <b>Support</b>
                     </p>
@@ -196,7 +225,14 @@ function ChitDetail(props) {
                   className="ps-2 pt-3"
                   style={{ marginRight: 5, cursor: "pointer" }}
                 >
-                  <div className="d-flex justify-content-between">
+                  <div
+                    className="d-flex justify-content-between"
+                    onClick={() =>
+                      handleClick(
+                        "https://lakshmijewellery.co.in/contact-us.php"
+                      )
+                    }
+                  >
                     <p className="fw-normal" style={{ fontSize: "small" }}>
                       <b>Contact Us</b>
                     </p>

@@ -1,16 +1,16 @@
 import React from "react";
-import Main from "../chitdetails/main";
+import ProfileDetail from "../chitdetails/profile";
 import Footer from "../footer/footer";
 import Header from "../header/header";
 
-function Dashboard(props) {
+function Profile(props) {
   return (
     <div>
       <Header />
-      <Main />
+      <ProfileDetail />
       <Footer />
     </div>
   );
 }
 
-export default Dashboard;
+export default Profile;

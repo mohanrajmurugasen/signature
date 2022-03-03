@@ -8,18 +8,14 @@ import { Avatar, Stack } from "@mui/material";
 import moment from "moment";
 import HomeIcon from "@mui/icons-material/Home";
 import HelpIcon from "@mui/icons-material/Help";
-import AutoAwesomeMosaicIcon from "@mui/icons-material/AutoAwesomeMosaic";
 import { useNavigate } from "react-router-dom";
 import Logo from "../../assets/img/logo.png";
 import PersonIcon from "@mui/icons-material/Person";
 import CurrencyRupeeIcon from "@mui/icons-material/CurrencyRupee";
-import { useDispatch } from "react-redux";
-import { addHead } from "../../redux/action/action";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 
 function Header(props) {
   const [anchorEl, setAnchorEl] = React.useState(null);
-  const dispatch = useDispatch();
   const open = Boolean(anchorEl);
   const navigate = useNavigate();
   const handleClick = (event) => {
@@ -28,13 +24,19 @@ function Header(props) {
   const handleClose = () => {
     setAnchorEl(null);
   };
+  const profile = () => {
+    navigate("/profile");
+    setAnchorEl(null);
+  };
   const now = new Date();
   const date = moment(now).format("MMMM Do YYYY, h:mm:ss a");
   const logOut = () => {
     localStorage.removeItem("auth");
     localStorage.removeItem("user");
-    navigate("/");
+    // navigate("/");
+    window.location.href = "/";
   };
+  const user = JSON.parse(JSON.stringify(localStorage.getItem("user")));
   return (
     <div className="header">
       <Navbar
@@ -85,7 +87,7 @@ function Header(props) {
                   onClick={handleClick}
                   className="buttons"
                 >
-                  Welcome to P.Vijaykumar <KeyboardArrowDownIcon />
+                  Welcome to {user} <KeyboardArrowDownIcon />
                 </Button>
               </Nav.Link>
 
@@ -98,8 +100,7 @@ function Header(props) {
                   "aria-labelledby": "basic-button",
                 }}
               >
-                <MenuItem onClick={handleClose}>Profile</MenuItem>
-                <MenuItem onClick={handleClose}>My account</MenuItem>
+                <MenuItem onClick={profile}>Profile</MenuItem>
                 <MenuItem onClick={logOut}>Logout</MenuItem>
               </Menu>
             </Nav>
@@ -115,30 +116,36 @@ function Header(props) {
             className="navs"
           >
             <Nav.Item>
-              <Nav.Link onClick={() => dispatch(addHead("main"))}>
+              <Nav.Link
+                onClick={() => {
+                  navigate("/");
+                }}
+              >
                 <HomeIcon />
                 <span>Home</span>
               </Nav.Link>
             </Nav.Item>
             <Nav.Item>
-              <Nav.Link onClick={() => dispatch(addHead("totalChit"))}>
-                <AutoAwesomeMosaicIcon />
-                <span>Passbook</span>
-              </Nav.Link>
-            </Nav.Item>
-            <Nav.Item>
-              <Nav.Link onClick={() => dispatch(addHead("profile"))}>
+              <Nav.Link
+                onClick={() => {
+                  navigate("/profile");
+                }}
+              >
                 <PersonIcon />
                 <span>Profile</span>
               </Nav.Link>
             </Nav.Item>
             <Nav.Item>
-              <Nav.Link onClick={() => dispatch(addHead("help"))}>
+              <Nav.Link>
                 <HelpIcon /> <span>Help</span>
               </Nav.Link>
             </Nav.Item>
             <Nav.Item>
-              <Nav.Link onClick={() => dispatch(addHead("quickpay"))}>
+              <Nav.Link
+                onClick={() => {
+                  navigate("/quickpay");
+                }}
+              >
                 <CurrencyRupeeIcon /> <span>Quick Pay</span>
               </Nav.Link>
             </Nav.Item>

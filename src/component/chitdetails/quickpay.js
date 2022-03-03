@@ -40,7 +40,7 @@ function QuickPay(props) {
   const user = JSON.parse(JSON.stringify(localStorage.getItem("user")));
   const [datas, setDatas] = useState([]);
   const [modalShow, setModalShow] = React.useState(false);
-  const [payments, setpayments] = React.useState(null);
+  const payments = null;
   const [payCount, setpayCount] = React.useState(1);
   useEffect(() => {
     authAxios
@@ -73,8 +73,49 @@ function QuickPay(props) {
   const height = window.innerHeight;
 
   const payNow = (itm) => {
-    setpayments(itm.due_amount);
-    setModalShow(true);
+    var options = {
+      key: "rzp_test_NW4GHgydEf9G2m",
+      key_secret: "5KFQQ1e18Gw4oPXdagItFUmi",
+      amount: itm.due_amount * 100,
+      currency: "INR",
+      name: "Amount Details",
+      description: "Lakshmi Jewellary",
+      handler: function (response) {
+        const transaction = {
+          txn_no: response.razorpay_payment_id,
+          card_holder_name: `${itm.customer_name}`,
+          paid_amount: `${itm.paid_amount}`,
+          transaction_details: [
+            {
+              id: itm.id,
+              collection_id: itm.collection_id,
+              customer_id: itm.customer_id,
+              chit_scheme_id: itm.chit_scheme_id,
+              due_no: `${itm.due_no}`,
+            },
+          ],
+        };
+        authAxios
+          .post("store_payment_details", transaction)
+          .then((val) => {
+            console.log(val.data);
+          })
+          .catch((err) => console.error(err.message));
+      },
+      prefill: {
+        name: `${itm.customer_name}`,
+        email: `mohanraj1711999@gmail.com`,
+        contact: `8526738649`,
+      },
+      notes: {
+        address: "Razorpay Corporate office",
+      },
+      theme: {
+        color: "#3399cc",
+      },
+    };
+    var pay = new window.Razorpay(options);
+    pay.open();
   };
 
   const nextSubmit = () => {

@@ -27,3 +27,10 @@ export const addCust = (cust) => {
     payload: cust,
   };
 };
+
+export const addPassbook = (passbook) => {
+  return {
+    type: Type.PASSBOOK,
+    payload: passbook,
+  };
+};

@@ -1,16 +1,16 @@
 import React from "react";
-import Main from "../chitdetails/main";
+import QuickPay from "../chitdetails/quickpay";
 import Footer from "../footer/footer";
 import Header from "../header/header";
 
-function Dashboard(props) {
+function QuickPays(props) {
   return (
     <div>
       <Header />
-      <Main />
+      <QuickPay />
       <Footer />
     </div>
   );
 }
 
-export default Dashboard;
+export default QuickPays;

@@ -9,28 +9,6 @@ import authAxios from "../interceptor/interceptor";
 function ProfileDetail(props) {
   const [datas, setdatas] = React.useState([]);
   const user = JSON.parse(JSON.stringify(localStorage.getItem("user")));
-  const name = [
-    { name: "Ledger Name" },
-    { name: "Address" },
-    { name: "Allow Credit Bill" },
-    { name: "Code" },
-    { name: "Date of Birth" },
-    { name: "Email" },
-    { name: "Flag" },
-    { name: "Gstin Number" },
-    { name: "Id" },
-    { name: "IsArchive" },
-    { name: "Ledger Id" },
-    { name: "Mobile Number" },
-    { name: "Pan Number" },
-    { name: "Phone Number" },
-    { name: "Place" },
-    { name: "Place Id" },
-    { name: "SetActive" },
-    { name: "Short Name" },
-    { name: "Website" },
-    { name: "Wedding Anniversary Date" },
-  ];
   useEffect(() => {
     authAxios
       .post("customer_list", {
@@ -43,6 +21,7 @@ function ProfileDetail(props) {
       })
       .then((res) => {
         setdatas(res.data.index);
+        // console.log(res.data.index);
       })
       .catch((err) => console.error(err.message));
   }, [user]);
@@ -57,241 +36,147 @@ function ProfileDetail(props) {
           <Row style={{ justifyContent: "center" }}>
             <Col lg={8} md={10} sm={12}>
               <div className="light">
-                <h4 className="pt-2 ps-4 pb-2">
-                  <b>Contact Details</b>
-                </h4>
-                <Divider />
-                {name.map((itm, index) => (
-                  <Row className="pt-3 ps-4 pb-1" key={index}>
-                    <Col lg={3} md={3} sm={3} xs={3}>
-                      <p className="fw-normal address">{itm.name}</p>
-                    </Col>
-                    {datas.map((itms, index) =>
-                      itm.name === "Code" ? (
-                        <Col lg={8} md={8} sm={8} xs={8} key={index}>
+                {datas.map((itm, index) => (
+                  <div key={index}>
+                    <h4 className="pt-2 ps-4 pb-2">
+                      <b>Contact Details</b>
+                    </h4>
+                    <Divider />
+                    <div>
+                      <Row className="pt-3 ps-4 pb-1">
+                        <Col lg={3} md={3} sm={3} xs={3}>
+                          <p className="fw-normal address">Name</p>
+                        </Col>
+                        <Col lg={8} md={8} sm={8} xs={8}>
                           <p className="fw-normal details">
-                            <b>{itms.code}</b>
+                            <b>{itm.name}</b>
                           </p>
                         </Col>
-                      ) : itm.name === "Ledger Name" ? (
-                        <Col lg={8} md={8} sm={8} xs={8} key={index}>
+                      </Row>
+                    </div>
+                    <div>
+                      <Row className="pt-3 ps-4 pb-1">
+                        <Col lg={3} md={3} sm={3} xs={3}>
+                          <p className="fw-normal address">Ledger Name</p>
+                        </Col>
+                        <Col lg={8} md={8} sm={8} xs={8}>
                           <p className="fw-normal details">
-                            <b>
-                              {itms.ledger_name === null ||
-                              itms.ledger_name === ""
-                                ? "--------"
-                                : itms.ledger_name}
-                            </b>
+                            <b>{itm.ledger_name}</b>
                           </p>
                         </Col>
-                      ) : itm.name === "Address" ? (
-                        <Col lg={8} md={8} sm={8} xs={8} key={index}>
+                      </Row>
+                    </div>
+                    <div>
+                      <Row className="pt-3 ps-4 pb-1">
+                        <Col lg={3} md={3} sm={3} xs={3}>
+                          <p className="fw-normal address">Ledger Name</p>
+                        </Col>
+                        <Col lg={8} md={8} sm={8} xs={8}>
                           <p className="fw-normal details">
-                            <b>
-                              {itms.address1 === null || itms.address1 === ""
-                                ? "--------"
-                                : itms.address1 + itms.address2 + itms.address3}
-                            </b>
+                            <b>{itm.ledger_name}</b>
                           </p>
                         </Col>
-                      ) : itm.name === "Allow Credit Bill" ? (
-                        <Col lg={8} md={8} sm={8} xs={8} key={index}>
+                      </Row>
+                    </div>
+                    <div>
+                      <Row className="pt-3 ps-4 pb-1">
+                        <Col lg={3} md={3} sm={3} xs={3}>
+                          <p className="fw-normal address">Address</p>
+                        </Col>
+                        <Col lg={8} md={8} sm={8} xs={8}>
                           <p className="fw-normal details">
-                            <b>
-                              {itms.allow_credit_bill === null ||
-                              itms.allow_credit_bill === ""
-                                ? "--------"
-                                : itms.allow_credit_bill}
-                            </b>
+                            <b>{itm.address1 + itm.address1 + itm.address1}</b>
                           </p>
                         </Col>
-                      ) : itm.name === "Date of Birth" ? (
-                        <Col lg={8} md={8} sm={8} xs={8} key={index}>
+                      </Row>
+                    </div>
+                    <div>
+                      <Row className="pt-3 ps-4 pb-1">
+                        <Col lg={3} md={3} sm={3} xs={3}>
+                          <p className="fw-normal address">Code</p>
+                        </Col>
+                        <Col lg={8} md={8} sm={8} xs={8}>
                           <p className="fw-normal details">
-                            <b>
-                              {itms.dob === null || itms.dob === ""
-                                ? "--------"
-                                : itms.dob}
-                            </b>
+                            <b>{itm.code}</b>
                           </p>
                         </Col>
-                      ) : itm.name === "Email" ? (
-                        <Col lg={8} md={8} sm={8} xs={8} key={index}>
+                      </Row>
+                    </div>
+                    <div>
+                      <Row className="pt-3 ps-4 pb-1">
+                        <Col lg={3} md={3} sm={3} xs={3}>
+                          <p className="fw-normal address">Date Of Birth</p>
+                        </Col>
+                        <Col lg={8} md={8} sm={8} xs={8}>
                           <p className="fw-normal details">
-                            <b>
-                              {itms.email_id === null || itms.email_id === ""
-                                ? "--------"
-                                : itms.email_id}
-                            </b>
+                            <b>{itm.dob}</b>
                           </p>
                         </Col>
-                      ) : itm.name === "Flag" ? (
-                        <Col lg={8} md={8} sm={8} xs={8} key={index}>
+                      </Row>
+                    </div>
+                    <div>
+                      <Row className="pt-3 ps-4 pb-1">
+                        <Col lg={3} md={3} sm={3} xs={3}>
+                          <p className="fw-normal address">Email</p>
+                        </Col>
+                        <Col lg={8} md={8} sm={8} xs={8}>
                           <p className="fw-normal details">
-                            <b>
-                              {itms.flag === null || itms.flag === ""
-                                ? "--------"
-                                : itms.flag}
-                            </b>
+                            <b>{itm.email_id}</b>
                           </p>
                         </Col>
-                      ) : itm.name === "Gstin Number" ? (
-                        <Col lg={8} md={8} sm={8} xs={8} key={index}>
+                      </Row>
+                    </div>
+                    <div>
+                      <Row className="pt-3 ps-4 pb-1">
+                        <Col lg={3} md={3} sm={3} xs={3}>
+                          <p className="fw-normal address">Mobile Number</p>
+                        </Col>
+                        <Col lg={8} md={8} sm={8} xs={8}>
                           <p className="fw-normal details">
-                            <b>
-                              {itms.gstin_no === null || itms.gstin_no === ""
-                                ? "--------"
-                                : itms.gstin_no}
-                            </b>
+                            <b>{itm.mobile_no}</b>
                           </p>
                         </Col>
-                      ) : itm.name === "Id" ? (
-                        <Col lg={8} md={8} sm={8} xs={8} key={index}>
+                      </Row>
+                    </div>
+                    <div>
+                      <Row className="pt-3 ps-4 pb-1">
+                        <Col lg={3} md={3} sm={3} xs={3}>
+                          <p className="fw-normal address">Number Of Chits</p>
+                        </Col>
+                        <Col lg={8} md={8} sm={8} xs={8}>
                           <p className="fw-normal details">
-                            <b>
-                              {itms.id === null || itms.id === ""
-                                ? "--------"
-                                : itms.id}
-                            </b>
+                            <b>{itm.no_of_running_chit}</b>
                           </p>
                         </Col>
-                      ) : itm.name === "IsArchive" ? (
-                        <Col lg={8} md={8} sm={8} xs={8} key={index}>
+                      </Row>
+                    </div>
+                    <div>
+                      <Row className="pt-3 ps-4 pb-1">
+                        <Col lg={3} md={3} sm={3} xs={3}>
+                          <p className="fw-normal address">Place</p>
+                        </Col>
+                        <Col lg={8} md={8} sm={8} xs={8}>
                           <p className="fw-normal details">
-                            <b>
-                              {itms.is_archive === null ||
-                              itms.is_archive === ""
-                                ? "--------"
-                                : itms.is_archive}
-                            </b>
+                            <b>{itm.place}</b>
                           </p>
                         </Col>
-                      ) : itm.name === "Ledger Id" ? (
-                        <Col lg={8} md={8} sm={8} xs={8} key={index}>
-                          <p className="fw-normal details">
-                            <b>
-                              {itms.ledger_id === null || itms.ledger_id === ""
-                                ? "--------"
-                                : itms.ledger_id}
-                            </b>
+                      </Row>
+                    </div>
+                    <div>
+                      <Row className="pt-3 ps-4 pb-1">
+                        <Col lg={3} md={3} sm={3} xs={3}>
+                          <p className="fw-normal address">
+                            Wedding Anniversary Date
                           </p>
                         </Col>
-                      ) : itm.name === "Ledger Name" ? (
-                        <Col lg={8} md={8} sm={8} xs={8} key={index}>
+                        <Col lg={8} md={8} sm={8} xs={8}>
                           <p className="fw-normal details">
-                            <b>
-                              {itms.ledger_name === null ||
-                              itms.ledger_name === ""
-                                ? "--------"
-                                : itms.ledger_name}
-                            </b>
+                            <b>{itm.wedding_anniversary_date}</b>
                           </p>
                         </Col>
-                      ) : itm.name === "Mobile Number" ? (
-                        <Col lg={8} md={8} sm={8} xs={8} key={index}>
-                          <p className="fw-normal details">
-                            <b>
-                              {itms.mobile_no === null || itms.mobile_no === ""
-                                ? "--------"
-                                : itms.mobile_no}
-                            </b>
-                          </p>
-                        </Col>
-                      ) : itm.name === "Name" ? (
-                        <Col lg={8} md={8} sm={8} xs={8} key={index}>
-                          <p className="fw-normal details">
-                            <b>
-                              {itms.name === null || itms.name === ""
-                                ? "--------"
-                                : itms.name}
-                            </b>
-                          </p>
-                        </Col>
-                      ) : itm.name === "Pan Number" ? (
-                        <Col lg={8} md={8} sm={8} xs={8} key={index}>
-                          <p className="fw-normal details">
-                            <b>
-                              {itms.pan_no === null || itms.pan_no === ""
-                                ? "--------"
-                                : itms.pan_no}
-                            </b>
-                          </p>
-                        </Col>
-                      ) : itm.name === "Phone Number" ? (
-                        <Col lg={8} md={8} sm={8} xs={8} key={index}>
-                          <p className="fw-normal details">
-                            <b>
-                              {itms.phone_no === null || itms.phone_no === ""
-                                ? "--------"
-                                : itms.phone_no}
-                            </b>
-                          </p>
-                        </Col>
-                      ) : itm.name === "Place" ? (
-                        <Col lg={8} md={8} sm={8} xs={8} key={index}>
-                          <p className="fw-normal details">
-                            <b>
-                              {itms.place === null || itms.place === ""
-                                ? "--------"
-                                : itms.place}
-                            </b>
-                          </p>
-                        </Col>
-                      ) : itm.name === "Place Id" ? (
-                        <Col lg={8} md={8} sm={8} xs={8} key={index}>
-                          <p className="fw-normal details">
-                            <b>
-                              {itms.place_id === null || itms.place_id === ""
-                                ? "--------"
-                                : itms.place_id}
-                            </b>
-                          </p>
-                        </Col>
-                      ) : itm.name === "SetActive" ? (
-                        <Col lg={8} md={8} sm={8} xs={8} key={index}>
-                          <p className="fw-normal details">
-                            <b>
-                              {itms.setActive === null || itms.setActive === ""
-                                ? "--------"
-                                : itms.setActive}
-                            </b>
-                          </p>
-                        </Col>
-                      ) : itm.name === "Short Name" ? (
-                        <Col lg={8} md={8} sm={8} xs={8} key={index}>
-                          <p className="fw-normal details">
-                            <b>
-                              {itms.short_name === null ||
-                              itms.short_name === ""
-                                ? "--------"
-                                : itms.short_name}
-                            </b>
-                          </p>
-                        </Col>
-                      ) : itm.name === "Website" ? (
-                        <Col lg={8} md={8} sm={8} xs={8} key={index}>
-                          <p className="fw-normal details">
-                            <b>
-                              {itms.website === null || itms.website === ""
-                                ? "--------"
-                                : itms.website}
-                            </b>
-                          </p>
-                        </Col>
-                      ) : itm.name === "Wedding Anniversary Date" ? (
-                        <Col lg={8} md={8} sm={8} xs={8} key={index}>
-                          <p className="fw-normal details">
-                            <b>
-                              {itms.wedding_anniversary_date === null ||
-                              itms.wedding_anniversary_date === ""
-                                ? "--------"
-                                : itms.wedding_anniversary_date}
-                            </b>
-                          </p>
-                        </Col>
-                      ) : null
-                    )}
-                  </Row>
+                      </Row>
+                    </div>
+                  </div>
                 ))}
               </div>
             </Col>

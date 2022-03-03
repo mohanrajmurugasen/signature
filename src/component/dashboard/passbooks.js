@@ -1,16 +1,16 @@
 import React from "react";
-import Main from "../chitdetails/main";
+import PassBook from "../chitdetails/passBook";
 import Footer from "../footer/footer";
 import Header from "../header/header";
 
-function Dashboard(props) {
+function Passbooks(props) {
   return (
     <div>
       <Header />
-      <Main />
+      <PassBook />
       <Footer />
     </div>
   );
 }
 
-export default Dashboard;
+export default Passbooks;

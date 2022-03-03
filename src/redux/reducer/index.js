@@ -1,4 +1,10 @@
-import { custReducer, headReducer, idReducer, phoneReducer } from "./reducer";
+import {
+  custReducer,
+  headReducer,
+  idReducer,
+  passbookReducer,
+  phoneReducer,
+} from "./reducer";
 import { combineReducers } from "redux";
 
 const reducer = combineReducers({
@@ -6,6 +12,7 @@ const reducer = combineReducers({
   phoneProducts: phoneReducer,
   idProducts: idReducer,
   custProducts: custReducer,
+  pasbookProducts: passbookReducer,
 });
 
 export default reducer;

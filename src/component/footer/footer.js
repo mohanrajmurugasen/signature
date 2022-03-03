@@ -1,7 +1,6 @@
 import React from "react";
 import { Container } from "react-bootstrap";
 import "./footer.css";
-// import CreditScoreIcon from "@mui/icons-material/CreditScore";
 
 function Footer(props) {
   return (

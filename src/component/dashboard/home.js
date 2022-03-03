@@ -1,16 +1,16 @@
 import React from "react";
-import Main from "../chitdetails/main";
+import ChitDetail from "../chitdetails/chitDetail";
 import Footer from "../footer/footer";
 import Header from "../header/header";
 
-function Dashboard(props) {
+function Home(props) {
   return (
     <div>
       <Header />
-      <Main />
+      <ChitDetail />
       <Footer />
     </div>
   );
 }
 
-export default Dashboard;
+export default Home;

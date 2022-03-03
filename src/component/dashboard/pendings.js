@@ -1,16 +1,16 @@
 import React from "react";
-import Main from "../chitdetails/main";
+import Pending from "../chitdetails/pending";
 import Footer from "../footer/footer";
 import Header from "../header/header";
 
-function Dashboard(props) {
+function Pendings(props) {
   return (
     <div>
       <Header />
-      <Main />
+      <Pending />
       <Footer />
     </div>
   );
 }
 
-export default Dashboard;
+export default Pendings;

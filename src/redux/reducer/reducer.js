@@ -63,3 +63,19 @@ export const custReducer = (state = custState, { type, payload }) => {
       return state;
   }
 };
+
+const passbookState = {
+  passbook: null,
+};
+
+export const passbookReducer = (state = passbookState, { type, payload }) => {
+  switch (type) {
+    case Type.PASSBOOK:
+      return {
+        ...state,
+        passbook: payload,
+      };
+    default:
+      return state;
+  }
+};

@@ -2,19 +2,18 @@ import React, { useEffect } from "react";
 import { Col, Container, Row } from "react-bootstrap";
 import "./chitdetails.css";
 import Card from "@mui/material/Card";
-import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
-import Button from "@mui/material/Button";
 import { Avatar, Chip, Divider } from "@mui/material";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
-import CurrencyRupeeIcon from "@mui/icons-material/CurrencyRupee";
 import { useDispatch } from "react-redux";
-import { addHead, addId, addPhone } from "../../redux/action/action";
+import { addHead, addId } from "../../redux/action/action";
 import authAxios from "../interceptor/interceptor";
+import { useNavigate } from "react-router-dom";
 
 function Main(props) {
   const [datas, setdatas] = React.useState([]);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const user = JSON.parse(JSON.stringify(localStorage.getItem("user")));
 
   const height = window.innerHeight;
@@ -36,6 +35,10 @@ function Main(props) {
       .catch((err) => console.error(err.message));
   }, [user]);
 
+  const handleClick = (x) => {
+    window.open(x);
+  };
+
   const render =
     datas &&
     datas.map((itm, index) => (
@@ -44,8 +47,9 @@ function Main(props) {
           sx={{ minWidth: 275, marginBottom: 5 }}
           className="mainCards"
           onClick={() => {
-            dispatch(addHead("home"));
+            dispatch(addHead(itm.name));
             dispatch(addId(itm.id));
+            navigate("/home");
           }}
         >
           <CardContent>
@@ -115,7 +119,10 @@ function Main(props) {
                   className="ps-2 pt-3"
                   style={{ marginRight: 5, cursor: "pointer" }}
                 >
-                  <div className="d-flex justify-content-between">
+                  <div
+                    className="d-flex justify-content-between"
+                    onClick={() => navigate("/quickpay")}
+                  >
                     <p style={{ fontSize: "small" }}>
                       <b>Quick Pay</b>
                     </p>
@@ -133,7 +140,14 @@ function Main(props) {
                   className="ps-2 pt-3"
                   style={{ marginRight: 5, cursor: "pointer" }}
                 >
-                  <div className="d-flex justify-content-between">
+                  <div
+                    className="d-flex justify-content-between"
+                    onClick={() =>
+                      handleClick(
+                        "https://lakshmijewellery.co.in/contact-us.php"
+                      )
+                    }
+                  >
                     <p style={{ fontSize: "small" }}>
                       <b>Support</b>
                     </p>
@@ -151,7 +165,14 @@ function Main(props) {
                   className="ps-2 pt-3"
                   style={{ marginRight: 5, cursor: "pointer" }}
                 >
-                  <div className="d-flex justify-content-between">
+                  <div
+                    className="d-flex justify-content-between"
+                    onClick={() =>
+                      handleClick(
+                        "https://lakshmijewellery.co.in/contact-us.php"
+                      )
+                    }
+                  >
                     <p className="fw-normal" style={{ fontSize: "small" }}>
                       <b>Contact Us</b>
                     </p>

@@ -8,7 +8,7 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import { Container, Modal } from "react-bootstrap";
+import { Col, Container, Modal, Row } from "react-bootstrap";
 import { Button } from "@mui/material";
 import "./chitdetails.css";
 import "./passbook.css";
@@ -75,32 +75,44 @@ function PassBook(props) {
       <Table sx={{ minWidth: 700 }} aria-label="customized table">
         <TableHead className="tabHeads">
           <TableRow>
-            <StyledTableCell>Rcpt Date</StyledTableCell>
-            <StyledTableCell>Rcpt No.</StyledTableCell>
-            <StyledTableCell>Due Amount</StyledTableCell>
-            <StyledTableCell>Due Weight</StyledTableCell>
-            <StyledTableCell>Rate</StyledTableCell>
-            <StyledTableCell>Weight</StyledTableCell>
-            <StyledTableCell>Total Weight</StyledTableCell>
-            <StyledTableCell>Payment Type</StyledTableCell>
-            <StyledTableCell>Sign</StyledTableCell>
+            <StyledTableCell className="th">Ins No.</StyledTableCell>
+            <StyledTableCell className="th">Rcpt Date</StyledTableCell>
+            <StyledTableCell className="th">Rcpt No.</StyledTableCell>
+            <StyledTableCell className="th">Due Amount</StyledTableCell>
+            <StyledTableCell className="th">Due Weight</StyledTableCell>
+            <StyledTableCell className="th">Rate</StyledTableCell>
+            <StyledTableCell className="th">Weight</StyledTableCell>
+            <StyledTableCell className="th">Total Weight</StyledTableCell>
+            <StyledTableCell className="th">Payment Type</StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {datas &&
             datas.map((row, index) => (
               <StyledTableRow key={index}>
-                <StyledTableCell component="th" scope="row">
+                <StyledTableCell component="th" scope="row" className="th">
+                  {row.ins_no}
+                </StyledTableCell>
+                <StyledTableCell component="th" scope="row" className="th">
                   {row.receipt_date}
                 </StyledTableCell>
-                <StyledTableCell>{row.receipt_no}</StyledTableCell>
-                <StyledTableCell>{row.due_amount}</StyledTableCell>
-                <StyledTableCell>{row.due_weight}</StyledTableCell>
-                <StyledTableCell>{row.rate}</StyledTableCell>
-                <StyledTableCell>{row.weight}</StyledTableCell>
-                <StyledTableCell>{row.total_weight}</StyledTableCell>
-                <StyledTableCell>{row.payment_type}</StyledTableCell>
-                <StyledTableCell></StyledTableCell>
+                <StyledTableCell className="th">
+                  {row.receipt_no}
+                </StyledTableCell>
+                <StyledTableCell className="th">
+                  {row.due_amount}
+                </StyledTableCell>
+                <StyledTableCell className="th">
+                  {row.due_weight}
+                </StyledTableCell>
+                <StyledTableCell className="th">{row.rate}</StyledTableCell>
+                <StyledTableCell className="th">{row.weight}</StyledTableCell>
+                <StyledTableCell className="th">
+                  {row.total_weight}
+                </StyledTableCell>
+                <StyledTableCell className="th">
+                  {row.payment_type}
+                </StyledTableCell>
               </StyledTableRow>
             ))}
         </TableBody>
@@ -114,24 +126,26 @@ function PassBook(props) {
       style={{ height: height - 191, overflow: "auto" }}
     >
       <Container>
-        <div className="d-flex justify-content-between">
-          <h6 className="pt-3 pb-2">
-            <b>Name: </b>
-            {head}
-          </h6>
-          <h6 className="pt-3 pb-2">
-            <b>Joining Date: </b>
-            {passbook.join_date}
-          </h6>
-          <h6 className="pt-3 pb-2">
-            <b>Code: </b>
-            {passbook.chit_code}
-          </h6>
-          <h6 className="pt-3 pb-2">
-            <b>Maturity Date: </b>
-            {passbook.maturity_date}
-          </h6>
-          <PrintComponents
+        <Row>
+          <Col lg={4} md={4} sm={6} xs={6}>
+            <h6 className="pt-3 pb-2">
+              <b>Name: </b>
+              {head}
+            </h6>
+          </Col>
+          <Col lg={4} md={4} sm={6} xs={6}>
+            <h6 className="pt-3 pb-2 maturity2">
+              <b>Scheme Name: </b>
+              {passbook.chit_scheme_name}
+            </h6>
+          </Col>
+          <Col lg={4} md={4} sm={12} xs={12}>
+            <h6 className="pt-3 pb-2 maturity3">
+              <b>Code: </b>
+              {passbook.chit_code}
+            </h6>
+          </Col>
+          {/* <PrintComponents
             trigger={
               <Button variant="outlined" className="printer">
                 Print
@@ -139,8 +153,22 @@ function PassBook(props) {
             }
           >
             {print}
-          </PrintComponents>
-        </div>
+          </PrintComponents> */}
+        </Row>
+        <Row>
+          <Col lg={6} md={6} sm={6} xs={6}>
+            <h6 className="pt-3 pb-2">
+              <b>Joining Date: </b>
+              {passbook.join_date}
+            </h6>
+          </Col>
+          <Col lg={6} md={6} sm={6} xs={6}>
+            <h6 className="pt-3 pb-2 maturity">
+              <b>Maturity Date: </b>
+              {passbook.maturity_date}
+            </h6>
+          </Col>
+        </Row>
         {print}
         <Modal
           show={modalShow}

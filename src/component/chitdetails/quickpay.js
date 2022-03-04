@@ -142,24 +142,30 @@ function QuickPay(props) {
           <Table sx={{ minWidth: 700 }} aria-label="customized table">
             <TableHead className="tabHeads">
               <TableRow>
-                <StyledTableCell>Customer Name</StyledTableCell>
-                <StyledTableCell>Scheme Name</StyledTableCell>
-                <StyledTableCell>Chit Code</StyledTableCell>
-                <StyledTableCell>Due amount</StyledTableCell>
-                <StyledTableCell></StyledTableCell>
+                <StyledTableCell className="th">Customer Name</StyledTableCell>
+                <StyledTableCell className="th">Scheme Name</StyledTableCell>
+                <StyledTableCell className="th">Chit Code</StyledTableCell>
+                <StyledTableCell className="th">Due amount</StyledTableCell>
+                <StyledTableCell className="th"></StyledTableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               {currentItems &&
                 currentItems.map((row, index) => (
                   <StyledTableRow key={index}>
-                    <StyledTableCell component="th" scope="row">
+                    <StyledTableCell className="th" component="th" scope="row">
                       {row.customer_name}
                     </StyledTableCell>
-                    <StyledTableCell>{row.chit_scheme_name}</StyledTableCell>
-                    <StyledTableCell>{row.chit_code_name}</StyledTableCell>
-                    <StyledTableCell>{row.due_amount}</StyledTableCell>
-                    <StyledTableCell style={{ width: "150px" }}>
+                    <StyledTableCell className="th">
+                      {row.chit_scheme_name}
+                    </StyledTableCell>
+                    <StyledTableCell className="th">
+                      {row.chit_code_name}
+                    </StyledTableCell>
+                    <StyledTableCell className="th">
+                      {row.due_amount}
+                    </StyledTableCell>
+                    <StyledTableCell className="th" style={{ width: "150px" }}>
                       <Button variant="contained" onClick={() => payNow(row)}>
                         Pay Now
                       </Button>

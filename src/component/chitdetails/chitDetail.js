@@ -17,14 +17,9 @@ function ChitDetail(props) {
   const [datas, setdatas] = React.useState([]);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const chitList = (x, y, z) => {
-    dispatch(
-      addPhone({
-        x: x,
-        y: y,
-        z: z,
-      })
-    );
+  const chitList = (itm) => {
+    // console.log(itm);
+    dispatch(addPhone(itm));
     navigate("/pending");
   };
   const id = useSelector((state) => state.idProducts.id);
@@ -146,13 +141,7 @@ function ChitDetail(props) {
                           <div className="viewDetails">
                             <Button
                               variant="outlined"
-                              onClick={() =>
-                                chitList(
-                                  itm.chit_scheme_id,
-                                  itm.customer_id,
-                                  itm.chit_code_id
-                                )
-                              }
+                              onClick={() => chitList(itm)}
                             >
                               Pay Now
                             </Button>

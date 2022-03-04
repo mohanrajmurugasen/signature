@@ -5,10 +5,13 @@ import Card from "@mui/material/Card";
 import { Divider } from "@mui/material";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import authAxios from "../interceptor/interceptor";
+import { useNavigate } from "react-router-dom";
 
 function ProfileDetail(props) {
   const [datas, setdatas] = React.useState([]);
   const user = JSON.parse(JSON.stringify(localStorage.getItem("user")));
+
+  const navigate = useNavigate();
   useEffect(() => {
     authAxios
       .post("customer_list", {
@@ -26,6 +29,11 @@ function ProfileDetail(props) {
       .catch((err) => console.error(err.message));
   }, [user]);
   const height = window.innerHeight;
+
+  const handleClick = (x) => {
+    window.open(x);
+  };
+
   return (
     <div
       className="chitdetail pt-3 pb-3"
@@ -196,7 +204,10 @@ function ProfileDetail(props) {
                   className="ps-2 pt-3"
                   style={{ marginRight: 5, cursor: "pointer" }}
                 >
-                  <div className="d-flex justify-content-between">
+                  <div
+                    className="d-flex justify-content-between"
+                    onClick={() => navigate("/quickpay")}
+                  >
                     <p style={{ fontSize: "small" }}>
                       <b>Quick Pay</b>
                     </p>
@@ -214,7 +225,14 @@ function ProfileDetail(props) {
                   className="ps-2 pt-3"
                   style={{ marginRight: 5, cursor: "pointer" }}
                 >
-                  <div className="d-flex justify-content-between">
+                  <div
+                    className="d-flex justify-content-between"
+                    onClick={() =>
+                      handleClick(
+                        "https://lakshmijewellery.co.in/contact-us.php"
+                      )
+                    }
+                  >
                     <p style={{ fontSize: "small" }}>
                       <b>Support</b>
                     </p>
@@ -232,7 +250,14 @@ function ProfileDetail(props) {
                   className="ps-2 pt-3"
                   style={{ marginRight: 5, cursor: "pointer" }}
                 >
-                  <div className="d-flex justify-content-between">
+                  <div
+                    className="d-flex justify-content-between"
+                    onClick={() =>
+                      handleClick(
+                        "https://lakshmijewellery.co.in/contact-us.php"
+                      )
+                    }
+                  >
                     <p className="fw-normal" style={{ fontSize: "small" }}>
                       <b>Contact Us</b>
                     </p>

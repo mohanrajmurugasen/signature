@@ -9,7 +9,7 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import { Container, Modal } from "react-bootstrap";
+import { Col, Container, Modal, Row } from "react-bootstrap";
 import { Button } from "@mui/material";
 import ReactPaginate from "react-paginate";
 import "./chitdetails.css";
@@ -47,7 +47,6 @@ function Pending(props) {
   const payments = null;
   const [payCount, setpayCount] = React.useState(1);
   const [datas, setDatas] = useState([]);
-  // console.log(cust);
 
   useEffect(() => {
     authAxios
@@ -57,9 +56,9 @@ function Pending(props) {
         res.data.data
           .filter(
             (nam) =>
-              nam.chit_scheme_id === phone.x &&
-              nam.customer_id === phone.y &&
-              nam.chit_code_id === phone.z
+              nam.chit_scheme_id === phone.chit_scheme_id &&
+              nam.customer_id === phone.customer_id &&
+              nam.chit_code_id === phone.chit_code_id
           )
           .map((itm) => {
             return setDatas((datas) => [...datas, itm]);
@@ -154,27 +153,50 @@ function Pending(props) {
       style={{ height: height - 191, overflow: "auto" }}
     >
       <Container>
-        <div className="d-flex justify-content-between">
-          <h5>Name: {head}</h5>
-        </div>
+        <Row>
+          <Col lg={4} md={4} sm={6} xs={6}>
+            <h6 className="pt-3 pb-2">
+              <b>Name: </b>
+              {head}
+            </h6>
+          </Col>
+          <Col lg={4} md={4} sm={6} xs={6}>
+            <h6 className="pt-3 pb-2 maturity2">
+              <b>Scheme Name: </b>
+              {phone.chit_scheme_name}
+            </h6>
+          </Col>
+          <Col lg={4} md={4} sm={12} xs={12}>
+            <h6 className="pt-3 pb-2 maturity3">
+              <b>Code: </b>
+              {phone.chit_code}
+            </h6>
+          </Col>
+        </Row>
         <TableContainer component={Paper}>
           <Table sx={{ minWidth: 700 }} aria-label="customized table">
             <TableHead className="tabHeads">
               <TableRow>
-                <StyledTableCell>No</StyledTableCell>
-                <StyledTableCell>Due Date</StyledTableCell>
-                <StyledTableCell>Due amount</StyledTableCell>
-                <StyledTableCell></StyledTableCell>
+                <StyledTableCell className="th">Due No</StyledTableCell>
+                <StyledTableCell className="th">Due Date</StyledTableCell>
+                <StyledTableCell className="th">Due amount</StyledTableCell>
+                <StyledTableCell className="th"></StyledTableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               {currentItems &&
                 currentItems.map((row, index) => (
                   <StyledTableRow key={index}>
-                    <StyledTableCell>{index + 1}</StyledTableCell>
-                    <StyledTableCell>{row.due_date}</StyledTableCell>
-                    <StyledTableCell>{row.due_amount}</StyledTableCell>
-                    <StyledTableCell style={{ width: "150px" }}>
+                    <StyledTableCell className="th">
+                      {row.due_no}
+                    </StyledTableCell>
+                    <StyledTableCell className="th">
+                      {row.due_date}
+                    </StyledTableCell>
+                    <StyledTableCell className="th">
+                      {row.due_amount}
+                    </StyledTableCell>
+                    <StyledTableCell className="th" style={{ width: "150px" }}>
                       <Button variant="contained" onClick={() => payNow(row)}>
                         Pay Now
                       </Button>

@@ -10,8 +10,9 @@
   box-shadow: 0 4px 8px 0 rgb(0 0 0 / 6%), 0 6px 20px 0 rgb(0 0 0 / 6%) !important;
 }
 .chitdetail .chits h5 {
-  font-weight: 500;
+  font-weight: 400;
   font-size: 16px;
+  color: #625e5e;
 }
 .chitdetail .light {
   background-color: white !important;
@@ -116,13 +117,14 @@
   box-shadow: 0 4px 8px 0 rgb(0 0 0 / 4%), 0 6px 20px 0 rgb(0 0 0 / 0%) !important;
   cursor: pointer;
   border: 1px solid #0d6efd6b;
+  height: 135px;
 }
 .chitdetail .mainCards:hover {
   box-shadow: 0 4px 8px 0 rgb(0 0 0 / 10%), 0 6px 20px 0 rgb(0 0 0 / 9%) !important;
 }
-.css-132a6sb-MuiTableCell-root.MuiTableCell-body {
+.th {
   text-align: center !important;
 }
-.css-1wvnaxz-MuiTableCell-root.MuiTableCell-head {
+.th {
   text-align: center !important;
 }

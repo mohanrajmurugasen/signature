@@ -4,3 +4,17 @@
   position: relative !important;
   margin-top: 5px !important;
 }
+.maturity {
+  float: right;
+}
+.maturity3 {
+  float: right;
+}
+.maturity2 {
+  text-align: center;
+}
+@media screen and (max-width: 767px) {
+  .maturity3 {
+    float: left;
+  }
+}

@@ -35,66 +35,61 @@ function Copyright(props) {
 const theme = createTheme();
 
 export default function Login() {
-  const name = "lj";
-  const user = "9790016466";
+  // const name = "lj";
+  const name = "ljpol";
   const [password, setpassword] = React.useState("");
   const [otpNumber, setotpNumber] = React.useState("");
   const [otp, setotp] = React.useState(true);
   const [random, setrandom] = React.useState(null);
+  const [validCond, setvalidCond] = React.useState(false);
 
   const submit = () => {
-    if (password !== "") {
-      setotp(false);
-      let min = 1000;
-      let max = 9999;
-      let rand = min + Math.random() * (max - min);
-      setrandom(Math.floor(rand));
-      console.log(random);
-    } else {
-      alert("Please Enter Your Phone Number");
-    }
-  };
+    let min = 1000;
+    let max = 9999;
+    let rand = min + Math.random() * (max - min);
+    setrandom(Math.floor(rand));
 
-  const verifyOtp = () => {
     const datas = {
       corporate_name: `${name}`,
-      user_name: `${user}`,
+      user_name: `${password}`,
       password: `${password}`,
     };
-
-    // const verification = {
-    //   username: "mohanraj16119@gmail.com",
-    //   hash: "Hash key",
-    //   numbers: "8526738649",
-    //   sender: "TXTLCL",
-    //   message: "Test",
-    //   test: "0",
-    // };
-
-    // if (Number(otpNumber) === Number(random)) {
-    //   alert("hi");
-    // } else {
-    //   alert("No");
-    // }
-
-    // axios.post("http://api.textlocal.in/send/",verification).then(itm => {
-    //   console.log(itm.data)
-    // }).catch(err => console.error(err.message))
-
     authAxios
       .post("customer_signin", datas)
       .then((res) => {
         if (res.data.message === "Success") {
-          alert("You login successfully!");
-          localStorage.setItem("user", user);
+          setvalidCond(false);
           localStorage.setItem("auth", res.data.token);
-          // navigate("/dashboard");
-          window.location.href = "/";
+          setotp(false);
         } else {
-          alert("Please try again...");
+          setvalidCond(true);
         }
       })
-      .catch((err) => console.error(err.message));
+      .catch((err) => {
+        setvalidCond(true);
+        console.error(err.message);
+      });
+    // axios
+    //   .post(
+    //     `http://ctr.beyondmobile.co.in/api/otp.php?authkey=31705AcY4TOCs3P5dc50a94&mobile=${password}&message=Your%20OTP%20is%20${Math.floor(
+    //       rand
+    //     )}&sender=BeyonD&otp=${Math.floor(rand)}&otp_expiry=2&otp_length=4`
+    //   )
+    //   .then((res) => {
+    //     console.log(res);
+    //   })
+    //   .catch((err) => console.error("err.message"));
+  };
+
+  const verifyOtp = () => {
+    localStorage.setItem("user", password);
+    window.location.href = "/";
+
+    // if (Number(random) === Number(otpNumber)) {
+    // condition
+    // } else {
+    //   alert("Wrong information");
+    // }
   };
 
   return (
@@ -134,6 +129,7 @@ export default function Login() {
               </Typography>
               {otp ? (
                 <Box component="form" noValidate sx={{ mt: 1 }}>
+                  <div id="sign-in-button"></div>
                   <TextField
                     margin="normal"
                     required
@@ -144,6 +140,18 @@ export default function Login() {
                     value={password}
                     onChange={(e) => setpassword(e.target.value)}
                   />
+                  {validCond ? (
+                    <p
+                      style={{
+                        float: "left",
+                        fontSize: "13px",
+                        color: "red",
+                        marginBottom: "0px",
+                      }}
+                    >
+                      Please Enter Valid Phone
+                    </p>
+                  ) : null}
                   <Button
                     fullWidth
                     variant="contained"
@@ -157,6 +165,7 @@ export default function Login() {
                 </Box>
               ) : (
                 <Box noValidate sx={{ mt: 1 }}>
+                  <div id="sign-in-button"></div>
                   <TextField
                     margin="normal"
                     required
@@ -164,7 +173,7 @@ export default function Login() {
                     onInput={(e) => {
                       e.target.value = Math.max(0, parseInt(e.target.value))
                         .toString()
-                        .slice(0, 4);
+                        .slice(0, 6);
                     }}
                     name="otp"
                     label="Enter OTP"

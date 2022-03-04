@@ -47,7 +47,11 @@ function Header(props) {
         fixed="top"
       >
         <Container>
-          <Navbar.Brand href="#home">
+          <Navbar.Brand
+            onClick={() => {
+              navigate("/");
+            }}
+          >
             <img src={Logo} alt="mn" style={{ height: "48px" }} />
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />

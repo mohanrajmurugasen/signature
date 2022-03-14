@@ -14,7 +14,6 @@ import "./chitdetails.css";
 import "./passbook.css";
 import CloseIcon from "@mui/icons-material/Close";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import PrintComponents from "react-print-components";
 import { useSelector } from "react-redux";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({

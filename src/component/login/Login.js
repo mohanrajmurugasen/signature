@@ -12,7 +12,7 @@ import Logo from "../../assets/img/logo.png";
 import "./login.css";
 import Banner from "../../assets/img/banner01.jpg";
 import authAxios from "../interceptor/interceptor";
-// import axios from "axios";
+import axios from "axios";
 
 function Copyright(props) {
   return (
@@ -54,10 +54,29 @@ export default function Login() {
       user_name: `${password}`,
       password: `${password}`,
     };
+
+    const verifi = () => {
+      axios
+        .post(
+          `https://beyondmobile.org/api/otp.php?authkey=374188As7FNNiJb62284f0dP1&mobile=91${password}&message=Dear customer Use OTP ${Math.floor(
+            rand
+          )} to login to Lakshmi jewellery customer portal.&sender=LJPSMS&otp=${Math.floor(
+            rand
+          )}&DLT_TE_ID=1707164681574855347`
+        )
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((err) => {
+          console.error("err.message");
+        });
+    };
+
     authAxios
       .post("customer_signin", datas)
       .then((res) => {
         if (res.data.message === "Success") {
+          verifi();
           setvalidCond(false);
           localStorage.setItem("auth", res.data.token);
           setotp(false);
@@ -69,27 +88,15 @@ export default function Login() {
         setvalidCond(true);
         console.error(err.message);
       });
-    // axios
-    //   .post(
-    //     `http://ctr.beyondmobile.co.in/api/otp.php?authkey=31705AcY4TOCs3P5dc50a94&mobile=${password}&message=Your%20OTP%20is%20${Math.floor(
-    //       rand
-    //     )}&sender=BeyonD&otp=${Math.floor(rand)}&otp_expiry=2&otp_length=4`
-    //   )
-    //   .then((res) => {
-    //     console.log(res);
-    //   })
-    //   .catch((err) => console.error("err.message"));
   };
 
   const verifyOtp = () => {
-    localStorage.setItem("user", password);
-    window.location.href = "/";
-
-    // if (Number(random) === Number(otpNumber)) {
-    // condition
-    // } else {
-    //   alert("Wrong information");
-    // }
+    if (Number(random) === Number(otpNumber)) {
+      localStorage.setItem("user", password);
+      window.location.href = "/";
+    } else {
+      alert("Enter Valid OTP");
+    }
   };
 
   return (

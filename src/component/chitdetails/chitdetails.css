@@ -53,11 +53,11 @@
   color: black;
 }
 .pending .paginate ul li:hover {
-  background-color: #1976d2;
+  background-color: #cdaa83;
   color: white;
 }
 .pending .paginate ul .selected {
-  background-color: #1976d2;
+  background-color: #cdaa83;
   color: white;
 }
 .modal-dialog {
@@ -127,4 +127,9 @@
 }
 .th {
   text-align: center !important;
+}
+
+.pending .paying {
+  background-color: #cdaa83 !important;
+  color: black !important;
 }

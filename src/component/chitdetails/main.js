@@ -5,14 +5,16 @@ import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import { Avatar, Chip, Divider } from "@mui/material";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
-import { useDispatch } from "react-redux";
-import { addHead, addId } from "../../redux/action/action";
+// import { useDispatch } from "react-redux";
+// import { addHead, addId } from "../../redux/action/action";
 import authAxios from "../interceptor/interceptor";
 import { useNavigate } from "react-router-dom";
 
+var CryptoJS = require("crypto-js");
+
 function Main(props) {
   const [datas, setdatas] = React.useState([]);
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   const navigate = useNavigate();
   const user = JSON.parse(JSON.stringify(localStorage.getItem("user")));
 
@@ -47,8 +49,16 @@ function Main(props) {
           sx={{ minWidth: 275, marginBottom: 5 }}
           className="mainCards"
           onClick={() => {
-            dispatch(addHead(itm.name));
-            dispatch(addId(itm.id));
+            // dispatch(addHead(itm.name));
+            // dispatch(addId(itm.id));
+            localStorage.setItem(
+              "headingss",
+              CryptoJS.AES.encrypt(
+                JSON.stringify(itm.name),
+                "my-secret-key@123"
+              ).toString()
+            );
+            localStorage.setItem("chitDetId", itm.id);
             navigate("/home");
           }}
         >

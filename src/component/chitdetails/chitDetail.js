@@ -8,8 +8,9 @@ import Button from "@mui/material/Button";
 import { Avatar, Divider } from "@mui/material";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import CurrencyRupeeIcon from "@mui/icons-material/CurrencyRupee";
-import { useDispatch, useSelector } from "react-redux";
-import { addCust, addPassbook, addPhone } from "../../redux/action/action";
+import { useDispatch } from "react-redux";
+// import { addCust, addPassbook, addPhone } from "../../redux/action/action";
+import { addPhone } from "../../redux/action/action";
 import authAxios from "../interceptor/interceptor";
 import { useNavigate } from "react-router-dom";
 
@@ -18,11 +19,11 @@ function ChitDetail(props) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const chitList = (itm) => {
-    // console.log(itm);
     dispatch(addPhone(itm));
+    // localStorage.setItem("addPhone", [itm]);
     navigate("/pending");
   };
-  const id = useSelector((state) => state.idProducts.id);
+  const id = JSON.parse(JSON.stringify(localStorage.getItem("chitDetId")));
 
   const handleClick = (x) => {
     window.open(x);
@@ -131,8 +132,10 @@ function ChitDetail(props) {
                             variant="outlined"
                             size="small"
                             onClick={() => {
-                              dispatch(addCust(itm.chit_code_id));
-                              dispatch(addPassbook(itm));
+                              // dispatch(addCust(itm.chit_code_id));
+                              // dispatch(addPassbook(itm));
+                              localStorage.setItem("cust", itm.chit_code_id);
+                              localStorage.setItem("passboks", itm);
                               navigate("/passbook");
                             }}
                           >

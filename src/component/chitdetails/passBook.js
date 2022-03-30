@@ -14,7 +14,8 @@ import "./chitdetails.css";
 import "./passbook.css";
 import CloseIcon from "@mui/icons-material/Close";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import { useSelector } from "react-redux";
+// import { useSelector } from "react-redux";
+var CryptoJS = require("crypto-js");
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -36,9 +37,14 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 function PassBook(props) {
-  const cust = useSelector((state) => state.custProducts.cust);
-  const head = useSelector((state) => state.headProducts.head);
-  const passbook = useSelector((state) => state.pasbookProducts.passbook);
+  const cust = JSON.parse(JSON.stringify(localStorage.getItem("cust")));
+  const head = JSON.parse(
+    CryptoJS.AES.decrypt(
+      JSON.parse(JSON.stringify(localStorage.getItem("headingss"))),
+      "my-secret-key@123"
+    ).toString(CryptoJS.enc.Utf8)
+  );
+  const passbook = JSON.parse(JSON.stringify(localStorage.getItem("passboks")));
   const [datas, setDatas] = useState([]);
   const [modalShow, setModalShow] = React.useState(false);
   const payments = null;

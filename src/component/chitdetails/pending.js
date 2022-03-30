@@ -17,6 +17,7 @@ import ArrowBackIosNewIcon from "@mui/icons-material/KeyboardDoubleArrowLeft";
 import ArrowForwardIcon from "@mui/icons-material/KeyboardDoubleArrowRight";
 import CloseIcon from "@mui/icons-material/Close";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+var CryptoJS = require("crypto-js");
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -41,31 +42,56 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 function Pending(props) {
   const user = JSON.parse(JSON.stringify(localStorage.getItem("user")));
   const phone = useSelector((state) => state.phoneProducts.phone);
-  const cust = useSelector((state) => state.custProducts.cust);
-  const head = useSelector((state) => state.headProducts.head);
+  const cust = JSON.parse(JSON.stringify(localStorage.getItem("cust")));
+  const head = JSON.parse(
+    CryptoJS.AES.decrypt(
+      JSON.parse(JSON.stringify(localStorage.getItem("headingss"))),
+      "my-secret-key@123"
+    ).toString(CryptoJS.enc.Utf8)
+  );
   const [modalShow, setModalShow] = React.useState(false);
   const payments = null;
   const [payCount, setpayCount] = React.useState(1);
   const [datas, setDatas] = useState([]);
 
   useEffect(() => {
-    authAxios
-      .post("chit_customer_collection_due_list", { mobile_no: `${user}` })
-      .then((res) => {
-        console.log(res.data.data);
-        res.data.data
-          .filter(
-            (nam) =>
-              nam.chit_scheme_id === phone.chit_scheme_id &&
-              nam.customer_id === phone.customer_id &&
-              nam.chit_code_id === phone.chit_code_id
-          )
-          .map((itm) => {
-            return setDatas((datas) => [...datas, itm]);
-          });
-      })
-      .catch((err) => console.error(err.message));
+    let isMounted = true;
+
+    const fetch = async () => {
+      await authAxios
+        .post("chit_customer_collection_due_list", { mobile_no: `${user}` })
+        .then((res) => {
+          if (isMounted) {
+            setDatas(res.data.data);
+          }
+        })
+        .catch((err) => console.error(err.message));
+    };
+
+    fetch();
+
+    const interval = setInterval(() => {
+      fetch();
+    }, 1000);
+
+    return () => {
+      clearInterval(interval);
+      isMounted = false;
+    };
   }, [user, phone, cust]);
+
+  const [filteredCountries, setfilteredCountries] = useState([]);
+
+  useEffect(() => {
+    const dat = datas.filter((country) => {
+      return (
+        country.chit_scheme_id === phone.chit_scheme_id &&
+        country.customer_id === phone.customer_id &&
+        country.chit_code_id === phone.chit_code_id
+      );
+    });
+    setfilteredCountries(dat);
+  }, [datas, phone]);
 
   const [currentItems, setCurrentItems] = useState(null);
   const [pageCount, setPageCount] = useState(0);
@@ -74,12 +100,13 @@ function Pending(props) {
 
   useEffect(() => {
     const endOffset = itemOffset + itemsPerPage;
-    setCurrentItems(datas.slice(itemOffset, endOffset));
-    setPageCount(Math.ceil(datas.length / itemsPerPage));
-  }, [itemOffset, itemsPerPage, datas]);
+    setCurrentItems(filteredCountries.slice(itemOffset, endOffset));
+    setPageCount(Math.ceil(filteredCountries.length / itemsPerPage));
+  }, [itemOffset, itemsPerPage, filteredCountries]);
 
   const handlePageClick = (event) => {
-    const newOffset = (event.selected * itemsPerPage) % datas.length;
+    const newOffset =
+      (event.selected * itemsPerPage) % filteredCountries.length;
     console.log(
       `User requested page number ${event.selected}, which is offset ${newOffset}`
     );
@@ -89,8 +116,10 @@ function Pending(props) {
 
   const payNow = (itm) => {
     var options = {
-      key: "rzp_test_NW4GHgydEf9G2m",
-      key_secret: "5KFQQ1e18Gw4oPXdagItFUmi",
+      key: "rzp_test_Gyt3Usf1nNi9Rr",
+      // key: "rzp_live_OzELFB7cOYD1k0",
+      key_secret: "alnHJbZrsnM9IPUl1SsrNEza",
+      // key_secret: "n9DExwZeJCD3J946XUC9JfPO",
       amount: itm.due_amount * 100,
       currency: "INR",
       name: "Amount Details",
@@ -99,7 +128,7 @@ function Pending(props) {
         const transaction = {
           txn_no: response.razorpay_payment_id,
           card_holder_name: `${itm.customer_name}`,
-          paid_amount: `${itm.paid_amount}`,
+          paid_amount: `${itm.due_amount}`,
           transaction_details: [
             {
               id: itm.id,
@@ -120,7 +149,7 @@ function Pending(props) {
       prefill: {
         name: `${itm.customer_name}`,
         email: `mohanraj1711999@gmail.com`,
-        contact: `8526738649`,
+        contact: `${user}`,
       },
       notes: {
         address: "Razorpay Corporate office",
@@ -197,7 +226,11 @@ function Pending(props) {
                       {row.due_amount}
                     </StyledTableCell>
                     <StyledTableCell className="th" style={{ width: "150px" }}>
-                      <Button variant="contained" onClick={() => payNow(row)}>
+                      <Button
+                        variant="contained"
+                        className="paying"
+                        onClick={() => payNow(row)}
+                      >
                         Pay Now
                       </Button>
                     </StyledTableCell>

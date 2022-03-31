@@ -9,21 +9,27 @@ import { Avatar, Divider } from "@mui/material";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import CurrencyRupeeIcon from "@mui/icons-material/CurrencyRupee";
 import { useDispatch } from "react-redux";
-// import { addCust, addPassbook, addPhone } from "../../redux/action/action";
-import { addPhone } from "../../redux/action/action";
+import { addPassbook } from "../../redux/action/action";
+// import { addPhone } from "../../redux/action/action";
 import authAxios from "../interceptor/interceptor";
 import { useNavigate } from "react-router-dom";
+var CryptoJS = require("crypto-js");
 
 function ChitDetail(props) {
   const [datas, setdatas] = React.useState([]);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const chitList = (itm) => {
-    dispatch(addPhone(itm));
-    // localStorage.setItem("addPhone", [itm]);
+    // dispatch(addPhone(itm));
+    localStorage.setItem("addPhone", JSON.stringify(itm));
     navigate("/pending");
   };
-  const id = JSON.parse(JSON.stringify(localStorage.getItem("chitDetId")));
+  const id = JSON.parse(
+    CryptoJS.AES.decrypt(
+      JSON.parse(JSON.stringify(localStorage.getItem("chitDetId"))),
+      "chitDetId"
+    ).toString(CryptoJS.enc.Utf8)
+  );
 
   const handleClick = (x) => {
     window.open(x);
@@ -133,9 +139,18 @@ function ChitDetail(props) {
                             size="small"
                             onClick={() => {
                               // dispatch(addCust(itm.chit_code_id));
-                              // dispatch(addPassbook(itm));
-                              localStorage.setItem("cust", itm.chit_code_id);
-                              localStorage.setItem("passboks", itm);
+                              dispatch(addPassbook(itm));
+                              localStorage.setItem(
+                                "cust",
+                                CryptoJS.AES.encrypt(
+                                  JSON.stringify(itm.chit_code_id),
+                                  "cust"
+                                ).toString()
+                              );
+                              localStorage.setItem(
+                                "passbooks",
+                                JSON.stringify(itm)
+                              );
                               navigate("/passbook");
                             }}
                           >

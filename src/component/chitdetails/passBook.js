@@ -37,14 +37,19 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 function PassBook(props) {
-  const cust = JSON.parse(JSON.stringify(localStorage.getItem("cust")));
+  const cust = JSON.parse(
+    CryptoJS.AES.decrypt(
+      JSON.parse(JSON.stringify(localStorage.getItem("cust"))),
+      "cust"
+    ).toString(CryptoJS.enc.Utf8)
+  );
   const head = JSON.parse(
     CryptoJS.AES.decrypt(
       JSON.parse(JSON.stringify(localStorage.getItem("headingss"))),
-      "my-secret-key@123"
+      "headingss"
     ).toString(CryptoJS.enc.Utf8)
   );
-  const passbook = JSON.parse(JSON.stringify(localStorage.getItem("passboks")));
+  const passbook = JSON.parse(localStorage.getItem("passbooks"));
   const [datas, setDatas] = useState([]);
   const [modalShow, setModalShow] = React.useState(false);
   const payments = null;

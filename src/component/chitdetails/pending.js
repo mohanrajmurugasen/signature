@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+// import { useSelector } from "react-redux";
 import authAxios from "../interceptor/interceptor";
 import { styled } from "@mui/material/styles";
 import Table from "@mui/material/Table";
@@ -41,18 +41,19 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 
 function Pending(props) {
   const user = JSON.parse(JSON.stringify(localStorage.getItem("user")));
-  const phone = useSelector((state) => state.phoneProducts.phone);
-  const cust = JSON.parse(JSON.stringify(localStorage.getItem("cust")));
+  // const phone = useSelector((state) => state.phoneProducts.phone);
+  const phone = JSON.parse(localStorage.getItem("addPhone"));
   const head = JSON.parse(
     CryptoJS.AES.decrypt(
       JSON.parse(JSON.stringify(localStorage.getItem("headingss"))),
-      "my-secret-key@123"
+      "headingss"
     ).toString(CryptoJS.enc.Utf8)
   );
   const [modalShow, setModalShow] = React.useState(false);
   const payments = null;
   const [payCount, setpayCount] = React.useState(1);
   const [datas, setDatas] = useState([]);
+  const [pays, setpays] = useState(true);
 
   useEffect(() => {
     let isMounted = true;
@@ -70,15 +71,10 @@ function Pending(props) {
 
     fetch();
 
-    const interval = setInterval(() => {
-      fetch();
-    }, 1000);
-
     return () => {
-      clearInterval(interval);
       isMounted = false;
     };
-  }, [user, phone, cust]);
+  }, [user, pays]);
 
   const [filteredCountries, setfilteredCountries] = useState([]);
 
@@ -91,7 +87,7 @@ function Pending(props) {
       );
     });
     setfilteredCountries(dat);
-  }, [datas, phone]);
+  }, [datas]);
 
   const [currentItems, setCurrentItems] = useState(null);
   const [pageCount, setPageCount] = useState(0);
@@ -143,6 +139,7 @@ function Pending(props) {
           .post("store_payment_details", transaction)
           .then((val) => {
             console.log(val.data);
+            setpays(!pays);
           })
           .catch((err) => console.error(err.message));
       },

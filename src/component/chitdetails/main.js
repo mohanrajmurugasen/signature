@@ -55,10 +55,16 @@ function Main(props) {
               "headingss",
               CryptoJS.AES.encrypt(
                 JSON.stringify(itm.name),
-                "my-secret-key@123"
+                "headingss"
               ).toString()
             );
-            localStorage.setItem("chitDetId", itm.id);
+            localStorage.setItem(
+              "chitDetId",
+              CryptoJS.AES.encrypt(
+                JSON.stringify(itm.id),
+                "chitDetId"
+              ).toString()
+            );
             navigate("/home");
           }}
         >

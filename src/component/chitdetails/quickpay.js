@@ -42,6 +42,7 @@ function QuickPay(props) {
   const [modalShow, setModalShow] = React.useState(false);
   const payments = null;
   const [payCount, setpayCount] = React.useState(1);
+  const [pays, setpays] = React.useState(true);
 
   useEffect(() => {
     let isMounted = true;
@@ -57,15 +58,10 @@ function QuickPay(props) {
 
     fetch();
 
-    const interval = setInterval(() => {
-      fetch();
-    }, 1000);
-
     return () => {
-      clearInterval(interval);
       isMounted = false;
     };
-  }, [user]);
+  }, [user, pays]);
 
   const [currentItems, setCurrentItems] = useState(null);
   const [pageCount, setPageCount] = useState(0);
@@ -118,6 +114,7 @@ function QuickPay(props) {
           .post("store_payment_details", transaction)
           .then((val) => {
             console.log(val.data);
+            setpays(!pays);
           })
           .catch((err) => console.error(err.message));
       },

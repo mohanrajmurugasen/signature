@@ -33,6 +33,11 @@ function Header(props) {
   const logOut = () => {
     localStorage.removeItem("auth");
     localStorage.removeItem("user");
+    localStorage.removeItem("addPhone");
+    localStorage.removeItem("headingss");
+    localStorage.removeItem("cust");
+    localStorage.removeItem("passbooks");
+    localStorage.removeItem("chitDetId");
     // navigate("/");
     window.location.href = "/";
   };

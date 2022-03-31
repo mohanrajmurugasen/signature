@@ -17,6 +17,7 @@ import ArrowBackIosNewIcon from "@mui/icons-material/KeyboardDoubleArrowLeft";
 import ArrowForwardIcon from "@mui/icons-material/KeyboardDoubleArrowRight";
 import CloseIcon from "@mui/icons-material/Close";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import moment from "moment";
 var CryptoJS = require("crypto-js");
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -42,7 +43,13 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 function Pending(props) {
   const user = JSON.parse(JSON.stringify(localStorage.getItem("user")));
   // const phone = useSelector((state) => state.phoneProducts.phone);
-  const phone = JSON.parse(localStorage.getItem("addPhone"));
+
+  const pho = localStorage.getItem("addPhone");
+  const phone = JSON.parse(
+    CryptoJS.AES.decrypt(pho, "addPhone").toString(CryptoJS.enc.Utf8)
+  );
+
+  // const phone = JSON.parse(localStorage.getItem("addPhone"));
   const head = JSON.parse(
     CryptoJS.AES.decrypt(
       JSON.parse(JSON.stringify(localStorage.getItem("headingss"))),
@@ -124,7 +131,7 @@ function Pending(props) {
         const transaction = {
           txn_no: response.razorpay_payment_id,
           card_holder_name: `${itm.customer_name}`,
-          paid_amount: `${itm.due_amount}`,
+          paid_amount: `${itm.paid_amount}`,
           transaction_details: [
             {
               id: itm.id,
@@ -217,10 +224,10 @@ function Pending(props) {
                       {row.due_no}
                     </StyledTableCell>
                     <StyledTableCell className="th">
-                      {row.due_date}
+                      {moment(new Date(row.due_date)).format("DD-MM-YYYY")}
                     </StyledTableCell>
                     <StyledTableCell className="th">
-                      {row.due_amount}
+                      {row.paid_amount}
                     </StyledTableCell>
                     <StyledTableCell className="th" style={{ width: "150px" }}>
                       <Button

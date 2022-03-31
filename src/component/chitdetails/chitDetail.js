@@ -21,7 +21,12 @@ function ChitDetail(props) {
   const navigate = useNavigate();
   const chitList = (itm) => {
     // dispatch(addPhone(itm));
-    localStorage.setItem("addPhone", JSON.stringify(itm));
+
+    const phon = CryptoJS.AES.encrypt(
+      JSON.stringify(itm),
+      "addPhone"
+    ).toString();
+    localStorage.setItem("addPhone", phon);
     navigate("/pending");
   };
   const id = JSON.parse(
@@ -148,9 +153,17 @@ function ChitDetail(props) {
                                 ).toString()
                               );
                               localStorage.setItem(
-                                "passbooks",
-                                JSON.stringify(itm)
+                                "base",
+                                CryptoJS.AES.encrypt(
+                                  JSON.stringify(itm.scheme_based),
+                                  "base"
+                                ).toString()
                               );
+                              const pass = CryptoJS.AES.encrypt(
+                                JSON.stringify(itm),
+                                "passbooks"
+                              ).toString();
+                              localStorage.setItem("passbooks", pass);
                               navigate("/passbook");
                             }}
                           >

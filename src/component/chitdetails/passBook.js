@@ -14,6 +14,7 @@ import "./chitdetails.css";
 import "./passbook.css";
 import CloseIcon from "@mui/icons-material/Close";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import moment from "moment";
 // import { useSelector } from "react-redux";
 var CryptoJS = require("crypto-js");
 
@@ -43,13 +44,22 @@ function PassBook(props) {
       "cust"
     ).toString(CryptoJS.enc.Utf8)
   );
+  const base = JSON.parse(
+    CryptoJS.AES.decrypt(
+      JSON.parse(JSON.stringify(localStorage.getItem("base"))),
+      "base"
+    ).toString(CryptoJS.enc.Utf8)
+  );
   const head = JSON.parse(
     CryptoJS.AES.decrypt(
       JSON.parse(JSON.stringify(localStorage.getItem("headingss"))),
       "headingss"
     ).toString(CryptoJS.enc.Utf8)
   );
-  const passbook = JSON.parse(localStorage.getItem("passbooks"));
+  const passB = localStorage.getItem("passbooks");
+  const passbook = JSON.parse(
+    CryptoJS.AES.decrypt(passB, "passbooks").toString(CryptoJS.enc.Utf8)
+  );
   const [datas, setDatas] = useState([]);
   const [modalShow, setModalShow] = React.useState(false);
   const payments = null;
@@ -88,11 +98,22 @@ function PassBook(props) {
             <StyledTableCell className="th">Ins No.</StyledTableCell>
             <StyledTableCell className="th">Rcpt Date</StyledTableCell>
             <StyledTableCell className="th">Rcpt No.</StyledTableCell>
-            <StyledTableCell className="th">Due Amount</StyledTableCell>
-            <StyledTableCell className="th">Due Weight</StyledTableCell>
+            {Number(base) !== 2 && (
+              <StyledTableCell className="th">Due Amount</StyledTableCell>
+            )}
+            {Number(base) !== 1 && Number(base) !== 3 && (
+              <StyledTableCell className="th">Due Weight</StyledTableCell>
+            )}
             <StyledTableCell className="th">Rate</StyledTableCell>
-            <StyledTableCell className="th">Weight</StyledTableCell>
-            <StyledTableCell className="th">Total Weight</StyledTableCell>
+            {Number(base) !== 1 && Number(base) !== 3 && (
+              <StyledTableCell className="th">Weight</StyledTableCell>
+            )}
+            {Number(base) !== 3 ? (
+              <StyledTableCell className="th">Total Weight</StyledTableCell>
+            ) : (
+              <StyledTableCell className="th">Total Amount</StyledTableCell>
+            )}
+
             <StyledTableCell className="th">Payment Type</StyledTableCell>
           </TableRow>
         </TableHead>
@@ -104,22 +125,35 @@ function PassBook(props) {
                   {row.ins_no}
                 </StyledTableCell>
                 <StyledTableCell component="th" scope="row" className="th">
-                  {row.receipt_date}
+                  {moment(new Date(row.receipt_date)).format("DD-MM-YYYY")}
                 </StyledTableCell>
                 <StyledTableCell className="th">
                   {row.receipt_no}
                 </StyledTableCell>
-                <StyledTableCell className="th">
-                  {row.due_amount}
-                </StyledTableCell>
-                <StyledTableCell className="th">
-                  {row.due_weight}
-                </StyledTableCell>
+                {Number(base) !== 2 && (
+                  <StyledTableCell className="th">
+                    {row.due_amount}
+                  </StyledTableCell>
+                )}
+                {Number(base) !== 1 && Number(base) !== 3 && (
+                  <StyledTableCell className="th">
+                    {row.due_weight}
+                  </StyledTableCell>
+                )}
                 <StyledTableCell className="th">{row.rate}</StyledTableCell>
-                <StyledTableCell className="th">{row.weight}</StyledTableCell>
-                <StyledTableCell className="th">
-                  {row.total_weight}
-                </StyledTableCell>
+                {Number(base) !== 1 && Number(base) !== 3 && (
+                  <StyledTableCell className="th">{row.weight}</StyledTableCell>
+                )}
+                {Number(base) !== 3 ? (
+                  <StyledTableCell className="th">
+                    {row.total_weight}
+                  </StyledTableCell>
+                ) : (
+                  <StyledTableCell className="th">
+                    {parseFloat(row.total_weight).toFixed(2)}
+                  </StyledTableCell>
+                )}
+
                 <StyledTableCell className="th">
                   {row.payment_type}
                 </StyledTableCell>
@@ -169,13 +203,13 @@ function PassBook(props) {
           <Col lg={6} md={6} sm={6} xs={6}>
             <h6 className="pt-3 pb-2">
               <b>Joining Date: </b>
-              {passbook.join_date}
+              {moment(new Date(passbook.join_date)).format("DD-MM-YYYY")}
             </h6>
           </Col>
           <Col lg={6} md={6} sm={6} xs={6}>
             <h6 className="pt-3 pb-2 maturity">
               <b>Maturity Date: </b>
-              {passbook.maturity_date}
+              {moment(new Date(passbook.maturity_date)).format("DD-MM-YYYY")}
             </h6>
           </Col>
         </Row>

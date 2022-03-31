@@ -98,7 +98,7 @@ function QuickPay(props) {
         const transaction = {
           txn_no: response.razorpay_payment_id,
           card_holder_name: `${itm.customer_name}`,
-          paid_amount: `${itm.due_amount}`,
+          paid_amount: `${itm.paid_amount}`,
           transaction_details: [
             {
               id: itm.id,
@@ -181,7 +181,7 @@ function QuickPay(props) {
                       {row.chit_code_name}
                     </StyledTableCell>
                     <StyledTableCell className="th">
-                      {row.due_amount}
+                      {row.paid_amount}
                     </StyledTableCell>
                     <StyledTableCell className="th" style={{ width: "150px" }}>
                       <Button

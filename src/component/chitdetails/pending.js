@@ -118,12 +118,14 @@ function Pending(props) {
   const height = window.innerHeight;
 
   const payNow = (itm) => {
+    // console.log(itm);
     var options = {
       key: "rzp_test_Gyt3Usf1nNi9Rr",
       // key: "rzp_live_OzELFB7cOYD1k0",
       key_secret: "alnHJbZrsnM9IPUl1SsrNEza",
       // key_secret: "n9DExwZeJCD3J946XUC9JfPO",
-      amount: itm.due_amount * 100,
+      amount:
+        itm.scheme_based === 2 ? itm.paid_amount * 100 : itm.due_amount * 100,
       currency: "INR",
       name: "Amount Details",
       description: "Lakshmi Jewellary",

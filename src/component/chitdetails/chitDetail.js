@@ -117,12 +117,24 @@ function ChitDetail(props) {
                             </Col>
                             <Col lg={4} md={4} sm={4}>
                               <div className="text-center">
-                                <p>Due Amount</p>
+                                <p>
+                                  {itm.scheme_based === 2
+                                    ? "Due Weight"
+                                    : "Due Amount"}
+                                </p>
                                 <span>
                                   <b>
                                     {itm.monthly_due === 0
-                                      ? `₹ ${itm.monthly_due_weight}`
-                                      : `₹ ${itm.monthly_due}`}
+                                      ? `₹ ${
+                                          itm.scheme_based === 2
+                                            ? itm.monthly_due_weight.toFixed(3)
+                                            : itm.monthly_due_weight
+                                        }`
+                                      : `₹ ${
+                                          itm.scheme_based === 2
+                                            ? itm.monthly_due.toFixed(3)
+                                            : itm.monthly_due
+                                        }`}
                                   </b>
                                 </span>
                               </div>
